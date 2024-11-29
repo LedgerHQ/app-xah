@@ -222,7 +222,7 @@ err_t read_vector256_field(parseContext_t *context, field_t *field) {
         CHECK(append_new_field(context, &hash256));
         hash256->data_type = STI_HASH256;
         hash256->id = XAH_HASH256_URITOKEN_ID;
-        hash256->data.hash256 = (hash256_t *) (field->data.ptr + (i * 32));
+        hash256->data.hash256 = (hash256_t *) (field->data.ptr + (i * XAH_VECTOR256_SIZE));
         hash256->length = XAH_VECTOR256_SIZE;
     }
 
