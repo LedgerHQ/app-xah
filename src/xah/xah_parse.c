@@ -446,6 +446,15 @@ err_t post_process_field(parseContext_t *context, field_t *field) {
             }
             break;
         case STI_UINT32:
+            // Reject transaction if NetworkID is not within range
+            // 21330 ... 21339
+            if (field->id == XAH_UINT32_NETWORK_ID) {
+                uint32_t value = field->data.u32;
+                if (value < 21330 || value > 21339) {
+                    err.err = 0x6800;
+                    return err;
+                }
+            }
             break;
         case STI_VL:
             // Detect when SigningPubKey is empty (needed for multi-sign)
