@@ -1,7 +1,8 @@
 Transaction Type; Payment
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
-Amount; XRP 1
-Fee; XRP 0.0001
+Network ID; 21337
+Amount; XAH 1
+Fee; XAH 0.0001
 Destination;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
 Sig.PubKey [1]; 02b3ec4e5dd96029a647cfa20da07fe1f85296505552ccac114087e66b46bd77df
 Txn Sig. [1]; 30450221009c195dbbf7967e223d8626ca19cf02073667f2b22e206727bfe848ff42beac8a022048c323b0bed19a988bdbefa974b6de8aa9dcae250aa82b...

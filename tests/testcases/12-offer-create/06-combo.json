@@ -1,20 +1,22 @@
 {
-    "TransactionType": "OfferCreate",
-    "Account": "OWN_ADDR",
-    "Fee": "10",
-    "Flags": 2148335616,
-    "LastLedgerSequence": 7108682,
-    "Sequence": 25,
-    "TakerPays": {
-	    "currency": "8@8",
-	    "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc",
-	    "value": "12123"
-    },
-    "TakerGets": {
-        "currency": ">.<",
-        "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc",
-        "value": "234567"
-    },
-    "Expiration": 534171558,
-    "OfferSequence": 4321
+  "TransactionType": "OfferCreate",
+  "Account": "OWN_ADDR",
+  "Fee": "10",
+  "NetworkID": 21337,
+  "Flags": 851968,
+  "LastLedgerSequence": 7108682,
+  "Sequence": 25,
+  "TakerPays": {
+    "value": "12123",
+    "currency": "8@8",
+    "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc"
+  },
+  "TakerGets": {
+    "value": "234567",
+    "currency": "0000000000000000000000003E2E3C0000000000",
+    "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc"
+  },
+  "Expiration": 534171558,
+  "OfferSequence": 4321,
+  "SigningPubKey": "OWN_PUBKEY"
 }

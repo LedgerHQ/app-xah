@@ -1,7 +1,9 @@
 {
-    "TransactionType": "AccountSet",
-    "Account": "OWN_ADDR",
-    "Fee": "10",
-    "Sequence": 23,
-    "SetFlag": 2
+  "TransactionType": "AccountSet",
+  "Account": "OWN_ADDR",
+  "Fee": "10",
+  "NetworkID": 21337,
+  "Sequence": 23,
+  "SetFlag": 2,
+  "SigningPubKey": "OWN_PUBKEY"
 }

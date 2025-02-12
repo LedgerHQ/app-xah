@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,12 +15,12 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_LOADING_H
-#define LEDGER_APP_XRP_LOADING_H
+#ifndef LEDGER_APP_XAH_LOADING_H
+#define LEDGER_APP_XAH_LOADING_H
 
 #ifdef HAVE_BAGL
 #include "transaction.h"
 void execute_async(action_t action_to_load, const char* message);
 #endif  // HAVE_BAGL
 
-#endif  // LEDGER_APP_XRP_LOADING_H
+#endif  // LEDGER_APP_XAH_LOADING_H

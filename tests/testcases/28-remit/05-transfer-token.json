@@ -1,0 +1,14 @@
+{
+  "TransactionType": "Remit",
+  "Account": "OWN_ADDR",
+  "Destination": "rTooLkitCksh5mQa67eaa2JaWHDBnHkpy",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "URITokenIDs": [
+      "714F206C865D334721B2F3388BEAF33AA91BC1D78C71941D10A2A653C873EDD3",
+      "F86D43FBCFC24B31AD5F035083B34722C71871412A60429D4D79DAA833031EA6"
+  ],
+  "Sequence": 3,
+  "SigningPubKey": "OWN_PUBKEY"
+}

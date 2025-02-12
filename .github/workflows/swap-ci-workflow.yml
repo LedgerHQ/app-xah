@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-    - master
-    - develop
+      - master
+      - develop
   pull_request:
 
 jobs:
   job_functional_tests:
     uses: LedgerHQ/app-exchange/.github/workflows/reusable_swap_functional_tests.yml@develop
     with:
-      branch_for_xrp: ${{ github.ref }}
-      test_filter: '"XRP or xrp or Ripple or ripple"'
+      branch_for_xah: ${{ github.ref }}
+      test_filter: '"XAH or xah or Xahau or xahau"'

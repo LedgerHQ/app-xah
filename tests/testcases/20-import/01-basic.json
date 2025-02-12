@@ -1,0 +1,10 @@
+{
+  "TransactionType": "Import",
+  "Account": "OWN_ADDR",
+  "Blob": "DEADBEEF",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Sequence": 3,
+  "SigningPubKey": "OWN_PUBKEY"
+}

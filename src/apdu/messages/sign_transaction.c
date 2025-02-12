@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -24,7 +24,7 @@
 #include "global.h"
 #include "transaction.h"
 #include "idle_menu.h"
-#include "xrp_helpers.h"
+#include "xah_helpers.h"
 #include "crypto_helpers.h"
 
 static const uint8_t prefix_length = 4;
@@ -73,15 +73,15 @@ void sign_transaction() {
     if (parse_context.has_empty_pub_key) {
         cx_ecfp_public_key_t public_key;
 
-        xrp_pubkey_t *public_key_data = (xrp_pubkey_t *) key_buffer;
-        uint8_t *suffix_data = key_buffer + XRP_PUBKEY_SIZE;
+        xah_pubkey_t *public_key_data = (xah_pubkey_t *) key_buffer;
+        uint8_t *suffix_data = key_buffer + XAH_PUBKEY_SIZE;
 
         CX_CHECK(cx_ecfp_generate_pair_no_throw(tmp_ctx.transaction_context.curve,
                                                 &public_key,
                                                 &private_key,
                                                 1));
-        xrp_compress_public_key(&public_key, public_key_data);
-        CX_CHECK(xrp_public_key_hash160(public_key_data, suffix_data));
+        xah_compress_public_key(&public_key, public_key_data);
+        CX_CHECK(xah_public_key_hash160(public_key_data, suffix_data));
 
         memmove(tmp_ctx.transaction_context.raw_tx + tmp_ctx.transaction_context.raw_tx_length,
                 suffix_data,

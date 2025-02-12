@@ -1,6 +1,7 @@
 Transaction Type; Payment
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Amount; ABC 123000000
 Issuer;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
-Fee; XRP 0.000015
+Fee; XAH 0.000015
 Destination;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   

@@ -8,7 +8,7 @@
 #include "cx.h"
 #include "../src/swap/handle_check_address.h"
 #include "../src/swap/swap_utils.h"
-#include "../src/xrp/xrp_helpers.h"
+#include "../src/xah/xah_helpers.h"
 
 void test_check_address(void **state) {
     (void) state;
@@ -36,7 +36,7 @@ void test_check_address(void **state) {
         parse_bip32_path(bip32_path_ptr, bip32_path_length, bip32_path_parsed, MAX_BIP32_PATH),
         1);
 
-    xrp_address_t address;
+    xah_address_t address;
     get_address(&public_key, &address);
 
     assert_string_equal(address.buf, params.address_to_check);
@@ -54,9 +54,9 @@ void test_get_printable_amount(void **state) {
     assert_int_equal(swap_str_to_u64(params.amount, params.amount_length, &amount), 1);
     assert_int_equal(amount, 0x4d2);
     assert_int_equal(
-        xrp_print_amount(amount, params.printable_amount, sizeof(params.printable_amount)),
+        xah_print_amount(amount, params.printable_amount, sizeof(params.printable_amount)),
         0);
-    assert_string_equal(params.printable_amount, "XRP 0.001234");
+    assert_string_equal(params.printable_amount, "XAH 0.001234");
 }
 
 int main() {

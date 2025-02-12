@@ -1,0 +1,7 @@
+Transaction Type; Set Hook
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Fee; XAH 0.00005
+Flags [1]; Override
+Hook On [1]; 0000000000000000000000000000000000000000000000000000000000000000
+Hook Hash [1]; 23af965a7b30e138580412e4f35cebb26f14704cdec3ea1df493b78f671a2039

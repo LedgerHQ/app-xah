@@ -13,39 +13,39 @@ enable_testing()
 include_directories(
   include
   ../src
-  ../src/xrp
+  ../src/xah
   ../src/apdu/messages
 )
 
-add_library(xrp
-  ../src/xrp/amount.c
-  ../src/xrp/amount.h
-  ../src/xrp/array.h
-  ../src/xrp/fields.c
-  ../src/xrp/fields.h
-  ../src/xrp/field_sort.c
-  ../src/xrp/field_sort.h
-  ../src/xrp/flags.c
-  ../src/xrp/flags.h
-  ../src/xrp/fmt.c
-  ../src/xrp/fmt.h
-  ../src/xrp/general.c
-  ../src/xrp/general.h
-  ../src/xrp/number_helpers.c
-  ../src/xrp/number_helpers.h
-  ../src/xrp/percentage.c
-  ../src/xrp/percentage.h
-  ../src/xrp/readers.c
-  ../src/xrp/readers.h
-  ../src/xrp/ascii_strings.c
-  ../src/xrp/ascii_strings.h
-  ../src/xrp/time.c
-  ../src/xrp/time.h
-  ../src/xrp/transaction_types.h
-  ../src/xrp/xrp_helpers.c
-  ../src/xrp/xrp_helpers.h
-  ../src/xrp/xrp_parse.c
-  ../src/xrp/xrp_parse.h
+add_library(xah
+  ../src/xah/amount.c
+  ../src/xah/amount.h
+  ../src/xah/array.h
+  ../src/xah/fields.c
+  ../src/xah/fields.h
+  ../src/xah/field_sort.c
+  ../src/xah/field_sort.h
+  ../src/xah/flags.c
+  ../src/xah/flags.h
+  ../src/xah/fmt.c
+  ../src/xah/fmt.h
+  ../src/xah/general.c
+  ../src/xah/general.h
+  ../src/xah/number_helpers.c
+  ../src/xah/number_helpers.h
+  ../src/xah/percentage.c
+  ../src/xah/percentage.h
+  ../src/xah/readers.c
+  ../src/xah/readers.h
+  ../src/xah/ascii_strings.c
+  ../src/xah/ascii_strings.h
+  ../src/xah/time.c
+  ../src/xah/time.h
+  ../src/xah/transaction_types.h
+  ../src/xah/xah_helpers.c
+  ../src/xah/xah_helpers.h
+  ../src/xah/xah_parse.c
+  ../src/xah/xah_parse.h
 )
 
 add_executable(test_printers
@@ -84,10 +84,10 @@ add_executable(fuzz_tx
 )
 
 target_compile_options(fuzz_tx PRIVATE -Wall -fsanitize=fuzzer,address -g -ggdb2)
-target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl xrp -fsanitize=fuzzer,address)
-target_link_libraries(test_printers PRIVATE cmocka crypto ssl xrp)
-target_link_libraries(test_swap PRIVATE cmocka crypto ssl xrp)
-target_link_libraries(test_tx PRIVATE cmocka crypto ssl xrp)
+target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl xah -fsanitize=fuzzer,address)
+target_link_libraries(test_printers PRIVATE cmocka crypto ssl xah)
+target_link_libraries(test_swap PRIVATE cmocka crypto ssl xah)
+target_link_libraries(test_tx PRIVATE cmocka crypto ssl xah)
 
 add_test(test_printers test_printers)
 add_test(test_swap test_swap)

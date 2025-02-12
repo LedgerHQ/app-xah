@@ -1,0 +1,11 @@
+Transaction Type; Claim Channel
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Channel; 5db01b7ffed6b67e6b0414ded11e051d2ee2b7619ce0eaa6286d67a3a4d5bdb3
+Amount; USD 1
+Issuer;   rvYAfWj5gh6     7oV6fW32ZzP     3Aw4Eubs59B   
+Balance; USD 1
+Issuer;   rvYAfWj5gh6     7oV6fW32ZzP     3Aw4Eubs59B   
+Fee; XAH 0.00001
+Public Key; 023693f15967ae357d0327974ad46fe3c127113b1110d6044fd41e723689f81cc6
+Signature; 304402204ef0afb78ac23ed1c472e74f4299c0c21f1b21d07efc0a3838a420f76d783a400220154fb11b6f54320666e4c36ca7f686c16a3a0456800bbc43...

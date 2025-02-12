@@ -1,8 +1,9 @@
 Transaction Type; Set Regular Key
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Source Tag; 888
 Account Txn ID; f02eb74cb4f5d2e6ac8be70cea41cca872e680f9efd2027605f0b42666037aa8
-Fee; XRP 0.000018
+Fee; XAH 0.000018
 Regular Key;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
 Memo Data [1]; Developed by Towo Labs
 Memo Type [2]; https://www.xrptoolkit.com

@@ -1,7 +1,8 @@
 Transaction Type; Set Signer List
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Signer Quorum; 11
-Fee; XRP 0.00001
+Fee; XAH 0.00001
 Signer Weight [1]; 1
 Account [1];   rMRFD5eRj78p    DR2LT261iVK     UPXGNHYC9zK   
 Signer Weight [2]; 3

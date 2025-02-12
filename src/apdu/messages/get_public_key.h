@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,8 +16,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_GETPUBLICKEY_H
-#define LEDGER_APP_XRP_GETPUBLICKEY_H
+#ifndef LEDGER_APP_XAH_GETPUBLICKEY_H
+#define LEDGER_APP_XAH_GETPUBLICKEY_H
 
 #include <stdint.h>
 
@@ -28,4 +28,4 @@ void handle_get_public_key(uint8_t p1,
                            volatile unsigned int *flags,
                            volatile unsigned int *tx);
 
-#endif  // LEDGER_APP_XRP_GETPUBLICKEY_H
+#endif  // LEDGER_APP_XAH_GETPUBLICKEY_H

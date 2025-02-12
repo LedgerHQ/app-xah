@@ -1,0 +1,34 @@
+{
+  "TransactionType": "Remit",
+  "Account": "OWN_ADDR",
+  "Destination": "rTooLkitCksh5mQa67eaa2JaWHDBnHkpy",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Amounts": [
+    {
+      "AmountEntry": {
+        "Amount": {
+          "currency": "USD",
+          "issuer": "rExKpRKXNz25UAjbckCRtQsJFcSfjL9Er3",
+          "value": "1"
+        }
+      }
+    },
+    {
+      "AmountEntry": {
+        "Amount": "1000000"
+      }
+    }
+  ],
+  "MintURIToken": {
+    "Digest": "6F11A4DF4EE794E2800BB361173D454BFBECB3D7506C4F4CB0EC5AE98BE43747",
+    "Flags": 1,
+    "URI": "697066733A2F2F"
+  },
+  "URITokenIDs": [
+      "714F206C865D334721B2F3388BEAF33AA91BC1D78C71941D10A2A653C873EDD3"
+  ],
+  "Sequence": 3,
+  "SigningPubKey": "OWN_PUBKEY"
+}

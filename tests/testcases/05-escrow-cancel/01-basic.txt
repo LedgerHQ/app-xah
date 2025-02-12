@@ -1,5 +1,6 @@
 Transaction Type; Cancel Escrow
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Offer Sequence; 3
-Fee; XRP 0.00002
+Fee; XAH 0.00002
 Owner;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   

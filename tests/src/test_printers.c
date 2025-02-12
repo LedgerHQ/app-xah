@@ -6,15 +6,15 @@
 #include <cmocka.h>
 
 #include "cx.h"
-#include "../src/xrp/xrp_parse.h"
-#include "../src/xrp/xrp_helpers.h"
+#include "../src/xah/xah_parse.h"
+#include "../src/xah/xah_helpers.h"
 
 parseContext_t parse_context;
 
 void test_address(void **state) {
     (void) state;
 
-    xrp_address_t address;
+    xah_address_t address;
 
     memset(&address, 'a', sizeof(address));
 
@@ -35,16 +35,16 @@ void test_print_amount(void **state) {
     (void) state;
 
     char buf[128];
-    assert_int_equal(xrp_print_amount(123456, buf, sizeof(buf)), 0);
-    assert_string_equal(buf, "XRP 0.123456");
+    assert_int_equal(xah_print_amount(123456, buf, sizeof(buf)), 0);
+    assert_string_equal(buf, "XAH 0.123456");
 
-    assert_int_equal(xrp_print_amount(0xffffffffffffffff, buf, sizeof(buf)), -1);
+    assert_int_equal(xah_print_amount(0xffffffffffffffff, buf, sizeof(buf)), -1);
 
     uint64_t amount = 0x8ac7230489e7ffff;
-    assert_int_equal(xrp_print_amount(amount, buf, sizeof(buf)), 0);
-    assert_string_equal(buf, "XRP 9999999999999.999999");
+    assert_int_equal(xah_print_amount(amount, buf, sizeof(buf)), 0);
+    assert_string_equal(buf, "XAH 9999999999999.999999");
 
-    assert_int_equal(xrp_print_amount(amount + 1, buf, sizeof(buf)), -1);
+    assert_int_equal(xah_print_amount(amount + 1, buf, sizeof(buf)), -1);
 }
 
 int main() {

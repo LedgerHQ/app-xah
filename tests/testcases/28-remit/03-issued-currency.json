@@ -1,0 +1,21 @@
+{
+  "TransactionType": "Remit",
+  "Account": "OWN_ADDR",
+  "Destination": "rTooLkitCksh5mQa67eaa2JaWHDBnHkpy",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Amounts": [
+    {
+      "AmountEntry": {
+        "Amount": {
+          "currency": "USD",
+          "issuer": "rExKpRKXNz25UAjbckCRtQsJFcSfjL9Er3",
+          "value": "1"
+        }
+      }
+    }
+  ],
+  "Sequence": 3,
+  "SigningPubKey": "OWN_PUBKEY"
+}

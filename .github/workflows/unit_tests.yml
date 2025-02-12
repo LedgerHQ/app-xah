@@ -30,4 +30,4 @@ jobs:
 
       - name: Run unit tests
         run: |
-          make -C tests/build test
+          make -C tests/build/ test ARGS='-V -R test_tx'

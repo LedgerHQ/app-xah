@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2022 Ledger
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,7 +74,7 @@ void display_review_menu(parseResult_t *transaction_param, resultAction_t callba
 
     nbgl_useCaseReview(TYPE_TRANSACTION,
                        &pairList,
-                       &C_icon_XRP_64px,
+                       &C_icon_XAH_64px,
                        "Review transaction",
                        NULL,
                        "Sign transaction?",

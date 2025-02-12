@@ -7,9 +7,9 @@
 #include <cmocka.h>
 
 #include "cx.h"
-#include "../src/xrp/xrp_parse.h"
-#include "../src/xrp/xrp_helpers.h"
-#include "../src/xrp/fmt.h"
+#include "../src/xah/xah_parse.h"
+#include "../src/xah/xah_helpers.h"
+#include "../src/xah/fmt.h"
 
 parseContext_t parse_context;
 
@@ -42,6 +42,7 @@ static const char *testcases[] = {
     "../testcases/03-escrow-create/04-both-condition.raw",
     "../testcases/03-escrow-create/05-both-condition-destination.raw",
     "../testcases/03-escrow-create/06-all-common-fields.raw",
+    "../testcases/03-escrow-create/07-issued-currency.raw",
     "../testcases/04-escrow-finish/01-time-based.raw",
     "../testcases/04-escrow-finish/02-condition-based.raw",
     "../testcases/05-escrow-cancel/01-basic.raw",
@@ -49,7 +50,7 @@ static const char *testcases[] = {
     "../testcases/06-account-set/02-default-ripple.raw",
     "../testcases/06-account-set/03-deposit-auth.raw",
     "../testcases/06-account-set/04-disable-master.raw",
-    "../testcases/06-account-set/05-disallow-xrp.raw",
+    "../testcases/06-account-set/05-disallow-xah.raw",
     "../testcases/06-account-set/06-global-freeze.raw",
     "../testcases/06-account-set/07-no-freeze.raw",
     "../testcases/06-account-set/08-require-auth.raw",
@@ -74,8 +75,11 @@ static const char *testcases[] = {
     "../testcases/13-payment-channel-claim/01-basic.raw",
     "../testcases/13-payment-channel-claim/02-renew.raw",
     "../testcases/13-payment-channel-claim/03-close.raw",
+    "../testcases/13-payment-channel-claim/04-basic-currency.raw",
     "../testcases/14-payment-channel-create/01-basic.raw",
+    "../testcases/14-payment-channel-create/02-basic-currency.raw",
     "../testcases/15-payment-channel-fund/01-basic.raw",
+    "../testcases/15-payment-channel-fund/02-basic-currency.raw",
     "../testcases/16-signer-list-set/01-basic.raw",
     "../testcases/16-signer-list-set/02-delete.raw",
     "../testcases/17-trust-set/01-basic.raw",
@@ -90,6 +94,34 @@ static const char *testcases[] = {
     "../testcases/18-arrays/01-basic.raw",
     "../testcases/18-arrays/02-multiple.raw",
     "../testcases/18-arrays/03-not-last.raw",
+    "../testcases/19-claim-reward/01-basic.raw",
+    "../testcases/19-claim-reward/02-optout.raw",
+    "../testcases/20-import/01-basic.raw",
+    "../testcases/20-import/02-issuer.raw",
+    "../testcases/21-invoke/01-basic.raw",
+    "../testcases/21-invoke/02-blob.raw",
+    "../testcases/21-invoke/03-params.raw",
+    "../testcases/22-set-hook/01-noop.raw",
+    "../testcases/22-set-hook/02-create.raw",
+    "../testcases/22-set-hook/03-create-params.raw",
+    "../testcases/22-set-hook/04-create-grants.raw",
+    "../testcases/22-set-hook/05-install.raw",
+    "../testcases/22-set-hook/06-update.raw",
+    "../testcases/22-set-hook/07-delete.raw",
+    "../testcases/22-set-hook/08-delete-ns.raw",
+    "../testcases/23-uritoken-burn/01-basic.raw",
+    "../testcases/24-uritoken-buy/01-basic.raw",
+    "../testcases/25-uritoken-cancel-sell-offer/01-basic.raw",
+    "../testcases/26-uritoken-create-sell-offer/01-basic.raw",
+    "../testcases/27-uritoken-mint/01-basic.raw",
+    "../testcases/27-uritoken-mint/02-transfer.raw",
+    "../testcases/27-uritoken-mint/03-burnable.raw",
+    "../testcases/28-remit/01-activate.raw",
+    "../testcases/28-remit/02-native.raw",
+    "../testcases/28-remit/03-issued-currency.raw",
+    "../testcases/28-remit/04-mint-token.raw",
+    "../testcases/28-remit/05-transfer-token.raw",
+    "../testcases/28-remit/06-all.raw",
     NULL,
 };
 
@@ -161,7 +193,7 @@ static void generate_expected_result(const char *filename, parseResult_t *transa
 }
 
 static void check_transaction_results(const char *filename, parseResult_t *transaction) {
-    // printf("[*] %s\n", filename);
+    printf("[*] %s\n", filename);
     char path[1024];
     get_result_filename(filename, path, sizeof(path));
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -320,7 +320,7 @@ __attribute__((section(".boot"))) int main(int arg0) {
     os_boot();
 
     if (arg0 == 0) {
-        // called from dashboard as standalone xrp app
+        // called from dashboard as standalone xah app
         coin_main();
     } else {
         // Called as library from another app

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,13 +16,13 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_GLOBAL_H
-#define LEDGER_APP_XRP_GLOBAL_H
+#ifndef LEDGER_APP_XAH_GLOBAL_H
+#define LEDGER_APP_XAH_GLOBAL_H
 
 #include <stdbool.h>
 #include "constants.h"
-#include "xrp_parse.h"
-#include "xrp_helpers.h"
+#include "xah_parse.h"
+#include "xah_helpers.h"
 
 typedef enum {
     IDLE,
@@ -53,7 +53,7 @@ typedef union {
 
 typedef struct publicKeyContext_t {
     cx_ecfp_public_key_t public_key;
-    xrp_address_t address;
+    xah_address_t address;
     uint8_t chain_code[32];
     bool get_chaincode;
 } publicKeyContext_t;
@@ -78,4 +78,4 @@ extern bool called_from_swap;
 
 void reset_transaction_context();
 
-#endif  // LEDGER_APP_XRP_GLOBAL_H
+#endif  // LEDGER_APP_XAH_GLOBAL_H

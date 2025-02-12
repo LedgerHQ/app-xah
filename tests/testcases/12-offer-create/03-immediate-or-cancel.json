@@ -1,16 +1,18 @@
 {
-    "TransactionType": "OfferCreate",
-    "Account": "OWN_ADDR",
-    "Fee": "10",
-    "Flags": 2147614720,
-    "LastLedgerSequence": 7108682,
-    "Sequence": 25,
-    "TakerPays": {
-	    "currency": "GKO",
-	    "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc",
-	    "value": "2"
-    },
-    "TakerGets": "6000000",
-    "Expiration": 534171558,
-    "OfferSequence": 4321
+  "TransactionType": "OfferCreate",
+  "Account": "OWN_ADDR",
+  "Fee": "10",
+  "NetworkID": 21337,
+  "Flags": 131072,
+  "LastLedgerSequence": 7108682,
+  "Sequence": 25,
+  "TakerPays": {
+    "value": "2",
+    "currency": "GKO",
+    "issuer": "ruazs5h1qEsqpke88pcqnaseXdm6od2xc"
+  },
+  "TakerGets": "6000000",
+  "Expiration": 534171558,
+  "OfferSequence": 4321,
+  "SigningPubKey": "OWN_PUBKEY"
 }

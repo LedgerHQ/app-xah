@@ -1,0 +1,8 @@
+Transaction Type; Remit
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Fee; XAH 0.000015
+Destination;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+URIToken IDs; 2
+URIToken ID; 714f206c865d334721b2f3388beaf33aa91bc1d78c71941d10a2a653c873edd3
+URIToken ID; f86d43fbcfc24b31ad5f035083b34722c71871412a60429d4d79daa833031ea6

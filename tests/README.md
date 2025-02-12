@@ -1,7 +1,7 @@
 ## Functional tests
 
 ```console
-./speculos.py --log-level automation:DEBUG --automation file:$HOME/app-xrp/tests/automation.json ~/app-xrp/bin/app.elf &
+./speculos.py --log-level automation:DEBUG --automation file:$HOME/app-xah/tests/automation.json ~/app-xah/bin/app.elf &
 
 export LEDGER_PROXY_ADDRESS=127.0.0.1 LEDGER_PROXY_PORT=9999
 pytest-3 -v -s
@@ -37,7 +37,6 @@ make -C tests/build/ test ARGS='-V -R test_tx'
 ```
 
 ## Fuzzing
-
 
 ```console
 export ASAN_SYMBOLIZER_PATH=/usr/lib/llvm-9/bin/llvm-symbolizer

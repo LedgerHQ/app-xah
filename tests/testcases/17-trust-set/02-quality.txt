@@ -1,7 +1,8 @@
 Transaction Type; Set Trust Line
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Quality In; 429.4 %
 Quality Out; 98 %
 Limit Amount; L4p 1230000000
 Issuer;   rsP3mgGb2tcY    UrxiLFiHJiQ     XhsziegtwBc   
-Fee; XRP 0.00001
+Fee; XAH 0.00001

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2022 Ledger
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +44,7 @@ void display_address_confirmation_ui(char* address, action_t on_approve, action_
     strncpy(full_address, address, sizeof(full_address));
     nbgl_useCaseAddressReview((char*) full_address,
                               NULL,
-                              &C_icon_XRP_64px,
+                              &C_icon_XAH_64px,
                               "Verify XRP Address",
                               NULL,
                               confirmationChoiceClbk);

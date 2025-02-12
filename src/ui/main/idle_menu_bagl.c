@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,7 @@ UX_STEP_NOCB(
         ux_idle_flow_1_step,
         pnn,
         {
-            &C_icon_XRP,
+            &C_icon_XAH,
             "Use wallet to",
             "view accounts",
         });

@@ -1,7 +1,0 @@
-{
-    "TransactionType": "AccountSet",
-    "Account": "OWN_ADDR",
-    "Fee": "10",
-    "Sequence": 23,
-    "SetFlag": 3
-}

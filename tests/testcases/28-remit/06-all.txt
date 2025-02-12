@@ -1,0 +1,13 @@
+Transaction Type; Remit
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Fee; XAH 0.000015
+Destination;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Flags; Burnable
+Digest; 6f11a4df4ee794e2800bb361173d454bfbecb3d7506c4f4cb0ec5ae98be43747
+URI; ipfs://
+Amount [1]; USD 1
+Issuer [1];   rExKpRKXNz25    UAjbckCRtQs     JFcSfjL9Er3   
+Amount [2]; XAH 1
+URIToken IDs; 1
+URIToken ID; 714f206c865d334721b2f3388beaf33aa91bc1d78c71941d10a2a653c873edd3

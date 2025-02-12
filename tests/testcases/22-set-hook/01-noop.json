@@ -1,0 +1,14 @@
+{
+  "TransactionType": "SetHook",
+  "Account": "OWN_ADDR",
+  "Fee": "50",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Sequence": 3,
+  "Hooks": [
+    {
+      "Hook": {}
+    }
+  ],
+  "SigningPubKey": "OWN_PUBKEY"
+}

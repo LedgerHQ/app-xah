@@ -1,0 +1,8 @@
+Transaction Type; Fund Channel
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Expiration; 2017-03-18 16:59:18 UTC
+Channel; c1ae6dddeec05cf2978c0bad6fe302948e9533691dc749dcdd3b9e5992ca6198
+Amount; USD 1
+Issuer;   rvYAfWj5gh6     7oV6fW32ZzP     3Aw4Eubs59B   
+Fee; XAH 0.00001

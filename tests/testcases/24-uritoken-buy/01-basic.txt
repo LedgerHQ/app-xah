@@ -1,0 +1,6 @@
+Transaction Type; URIToken Buy
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+URIToken ID; 155893d0ab38820337d1a0254a5a52c5a240e715077f30febc5bd1179ddfb634
+Amount; XAH 20
+Fee; XAH 0.000015

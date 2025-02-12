@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,7 @@
 #pragma once
 
 #include "transaction.h"
-#include "xrp_parse.h"
+#include "xah_parse.h"
 
 #define OPTION_SIGN   0
 #define OPTION_REJECT 1

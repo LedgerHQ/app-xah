@@ -1,0 +1,19 @@
+{
+  "TransactionType": "PaymentChannelCreate",
+  "Account": "OWN_ADDR",
+  "Fee": "10",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Sequence": 25,
+  "Amount": {
+    "value": "1",
+    "currency": "USD",
+    "issuer": "rvYAfWj5gh67oV6fW32ZzP3Aw4Eubs59B"
+  },
+  "Destination": "rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn",
+  "SettleDelay": 86400,
+  "PublicKey": "023693F15967AE357D0327974AD46FE3C127113B1110D6044FD41E723689F81CC6",
+  "CancelAfter": 533171558,
+  "DestinationTag": 23480,
+  "SigningPubKey": "OWN_PUBKEY"
+}

@@ -1,0 +1,11 @@
+{
+  "TransactionType": "URITokenCreateSellOffer",
+  "Account": "OWN_ADDR",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "URITokenID": "155893D0AB38820337D1A0254A5A52C5A240E715077F30FEBC5BD1179DDFB634",
+  "Amount": "20000000",
+  "Sequence": 3,
+  "SigningPubKey": "OWN_PUBKEY"
+}

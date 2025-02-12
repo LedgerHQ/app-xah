@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -23,19 +23,19 @@
 #include "get_public_key.h"
 #include "constants.h"
 #include "global.h"
-#include "xrp_helpers.h"
-#include "xrp_pub_key.h"
-#include "xrp_parse.h"
+#include "xah_helpers.h"
+#include "xah_pub_key.h"
+#include "xah_parse.h"
 #include "address_ui.h"
 #include "idle_menu.h"
 
 uint32_t set_result_get_public_key() {
     uint32_t tx = 0;
     uint32_t address_length = strlen(tmp_ctx.public_key_context.address.buf);
-    G_io_apdu_buffer[tx++] = XRP_PUBKEY_SIZE;
-    xrp_pubkey_t *pubkey = (xrp_pubkey_t *) (G_io_apdu_buffer + tx);
-    xrp_compress_public_key(&tmp_ctx.public_key_context.public_key, pubkey);
-    tx += XRP_PUBKEY_SIZE;
+    G_io_apdu_buffer[tx++] = XAH_PUBKEY_SIZE;
+    xah_pubkey_t *pubkey = (xah_pubkey_t *) (G_io_apdu_buffer + tx);
+    xah_compress_public_key(&tmp_ctx.public_key_context.public_key, pubkey);
+    tx += XAH_PUBKEY_SIZE;
     G_io_apdu_buffer[tx++] = address_length;
     memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.address.buf, address_length);
     tx += address_length;

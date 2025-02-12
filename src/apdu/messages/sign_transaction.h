@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,11 +16,11 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_SIGNTRANSACTION_H
-#define LEDGER_APP_XRP_SIGNTRANSACTION_H
+#ifndef LEDGER_APP_XAH_SIGNTRANSACTION_H
+#define LEDGER_APP_XAH_SIGNTRANSACTION_H
 
 #include <stdint.h>
-#include "xrp_parse.h"
+#include "xah_parse.h"
 
 extern parseContext_t parse_context;
 
@@ -30,4 +30,4 @@ void handle_sign(uint8_t p1,
                  uint8_t data_length,
                  volatile unsigned int *flags);
 
-#endif  // LEDGER_APP_XRP_SIGNTRANSACTION_H
+#endif  // LEDGER_APP_XAH_SIGNTRANSACTION_H

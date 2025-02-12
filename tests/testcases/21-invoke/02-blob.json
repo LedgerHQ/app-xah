@@ -1,0 +1,10 @@
+{
+  "TransactionType": "Invoke",
+  "Account": "OWN_ADDR",
+  "Fee": "15",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Sequence": 3,
+  "Blob": "DEADBEEF",
+  "SigningPubKey": "OWN_PUBKEY"
+}

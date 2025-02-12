@@ -1,5 +1,6 @@
 Transaction Type; Set Trust Line
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Limit Amount; SEK 18937964132
 Issuer;   rsP3mgGb2tcY    UrxiLFiHJiQ     XhsziegtwBc   
-Fee; XRP 0.00001
+Fee; XAH 0.00001

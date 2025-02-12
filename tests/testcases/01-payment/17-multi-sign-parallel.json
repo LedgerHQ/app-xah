@@ -4,7 +4,8 @@
   "Destination": "rTooLkitCksh5mQa67eaa2JaWHDBnHkpy",
   "Amount": "1000000",
   "Fee": "100",
-  "Flags": 2147483648,
+  "NetworkID": 21337,
+  "Flags": 0,
   "Sequence": 7,
   "SigningPubKey": ""
 }

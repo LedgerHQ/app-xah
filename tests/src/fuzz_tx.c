@@ -5,9 +5,9 @@
 #include <string.h>
 
 #include "cx.h"
-#include "../src/xrp/xrp_parse.h"
-#include "../src/xrp/xrp_helpers.h"
-#include "../src/xrp/fmt.h"
+#include "../src/xah/xah_parse.h"
+#include "../src/xah/xah_helpers.h"
+#include "../src/xah/fmt.h"
 
 field_name_t field_name;
 field_value_t field_value;

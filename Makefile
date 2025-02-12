@@ -25,11 +25,11 @@ include $(BOLOS_SDK)/Makefile.defines
 #        Mandatory configuration       #
 ########################################
 # Application name
-APPNAME = XRP
+APPNAME = XAH
 
-APPVERSION_M=2
-APPVERSION_N=4
-APPVERSION_P=1
+APPVERSION_M=1
+APPVERSION_N=0
+APPVERSION_P=0
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 
 # Application source files
@@ -39,11 +39,11 @@ INCLUDES_PATH += ${BOLOS_SDK}/lib_standard_app
 
 # Application icons following guidelines:
 # https://developers.ledger.com/docs/embedded-app/design-requirements/#device-icon
-ICON_NANOS = img/nanos_app_xrp.gif
-ICON_NANOX = img/nanox_app_xrp.gif
-ICON_NANOSP = img/nanox_app_xrp.gif
-ICON_STAX = img/stax_app_xrp.gif
-ICON_FLEX = img/flex_app_xrp.gif
+ICON_NANOS = img/nanos_app_xah.gif
+ICON_NANOX = img/nanox_app_xah.gif
+ICON_NANOSP = img/nanox_app_xah.gif
+ICON_STAX = img/stax_app_xah.gif
+ICON_FLEX = img/flex_app_xah.gif
 
 # Application allowed derivation curves.
 # Possibles curves are: secp256k1, secp256r1, ed25519 and bls12381g1
@@ -67,7 +67,7 @@ PATH_APP_LOAD_PARAMS = "44'/144'"
 #   * It must at least contains one value.
 #   * Values can be the app ticker or anything else but should be unique.
 VARIANT_PARAM = COIN
-VARIANT_VALUES = xrp
+VARIANT_VALUES = xah
 
 # Enabling DEBUG flag will enable PRINTF and disable optimizations
 #DEBUG = 1
@@ -77,7 +77,7 @@ VARIANT_VALUES = xrp
 ########################################
 # See SDK `include/appflags.h` for the purpose of each permission
 #HAVE_APPLICATION_FLAG_DERIVE_MASTER = 1
-HAVE_APPLICATION_FLAG_GLOBAL_PIN = 1
+#HAVE_APPLICATION_FLAG_GLOBAL_PIN = 1
 HAVE_APPLICATION_FLAG_BOLOS_SETTINGS = 1
 HAVE_APPLICATION_FLAG_LIBRARY = 1
 
@@ -113,7 +113,7 @@ DISABLE_STANDARD_APP_FILES = 1
 
 # U2F
 DEFINES   += HAVE_IO_U2F
-DEFINES   += U2F_PROXY_MAGIC=\"XRP\"
+DEFINES   += U2F_PROXY_MAGIC=\"XAH\"
 
 SDK_SOURCE_PATH  += lib_u2f
 

@@ -2,11 +2,13 @@
   "TransactionType": "TrustSet",
   "Account": "OWN_ADDR",
   "Fee": "10",
-  "Flags": 2147614720,
+  "NetworkID": 21337,
+  "Flags": 131072,
   "Sequence": 25,
   "LimitAmount": {
+    "value": "1.23",
     "currency": "b^C",
-    "issuer": "rsP3mgGb2tcYUrxiLFiHJiQXhsziegtwBc",
-    "value": "123E-2"
-  }
+    "issuer": "rsP3mgGb2tcYUrxiLFiHJiQXhsziegtwBc"
+  },
+  "SigningPubKey": "OWN_PUBKEY"
 }

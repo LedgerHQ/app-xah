@@ -1,0 +1,11 @@
+Transaction Type; Create Channel
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Destination Tag; 23480
+Cancel After; 2016-11-22 23:12:38 UTC
+Settle Delay; 86400 s
+Amount; USD 1
+Issuer;   rvYAfWj5gh6     7oV6fW32ZzP     3Aw4Eubs59B   
+Fee; XAH 0.00001
+Public Key; 023693f15967ae357d0327974ad46fe3c127113b1110d6044fd41e723689f81cc6
+Destination;   rf1BiGeXwwQo    i8Z2ueFYTEX     SwuJYfV2Jpn   

@@ -1,7 +1,8 @@
-Transaction Type; Channel Claim
+Transaction Type; Claim Channel
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Flags; Renew
 Channel; c1ae6dddeec05cf2978c0bad6fe302948e9533691dc749dcdd3b9e5992ca6198
-Amount; XRP 10
-Balance; XRP 10
-Fee; XRP 0.00001
+Amount; XAH 10
+Balance; XAH 10
+Fee; XAH 0.00001

@@ -1,9 +1,10 @@
 {
-    "TransactionType": "SignerListSet",
-    "Account": "OWN_ADDR",
-    "Fee": "10",
-    "Flags": 2147483648,
-    "Sequence": 25,
-    "SignerQuorum": 0
+  "TransactionType": "SignerListSet",
+  "Account": "OWN_ADDR",
+  "Fee": "10",
+  "NetworkID": 21337,
+  "Flags": 0,
+  "Sequence": 25,
+  "SignerQuorum": 0,
+  "SigningPubKey": "OWN_PUBKEY"
 }
-

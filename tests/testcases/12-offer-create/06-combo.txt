@@ -1,5 +1,6 @@
 Transaction Type; Create Offer
 Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
 Flags; Passive, Fill or Kill, Sell
 Expiration; 2016-12-04 12:59:18 UTC
 Offer Sequence; 4321
@@ -7,4 +8,4 @@ Taker Pays; 8@8 12123
 Issuer;   ruazs5h1qEs     qpke88pcqna     seXdm6od2xc   
 Taker Gets; >.< 234567
 Issuer;   ruazs5h1qEs     qpke88pcqna     seXdm6od2xc   
-Fee; XRP 0.00001
+Fee; XAH 0.00001

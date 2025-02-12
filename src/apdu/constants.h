@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2017 Ledger
  *   (c) 2020 Towo Labs
  *
@@ -16,8 +16,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_CONSTANTS_H
-#define LEDGER_APP_XRP_CONSTANTS_H
+#ifndef LEDGER_APP_XAH_CONSTANTS_H
+#define LEDGER_APP_XAH_CONSTANTS_H
 
 #define CLA                       0xE0
 #define INS_GET_PUBLIC_KEY        0x02
@@ -39,4 +39,4 @@
 #define OFFSET_LC    4
 #define OFFSET_CDATA 5
 
-#endif  // LEDGER_APP_XRP_CONSTANTS_H
+#endif  // LEDGER_APP_XAH_CONSTANTS_H

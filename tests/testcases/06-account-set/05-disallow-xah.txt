@@ -1,0 +1,5 @@
+Transaction Type; Account Set
+Account;   rTooLkitCks     h5mQa67eaa2     JaWHDBnHkpy   
+Network ID; 21337
+Set Flag; Disallow XAH
+Fee; XAH 0.00001

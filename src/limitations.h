@@ -1,5 +1,5 @@
 /*******************************************************************************
- *   XRP Wallet
+ *   XAH Wallet
  *   (c) 2020 Towo Labs
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +15,8 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#ifndef LEDGER_APP_XRP_LIMITATIONS_H
-#define LEDGER_APP_XRP_LIMITATIONS_H
+#ifndef LEDGER_APP_XAH_LIMITATIONS_H
+#define LEDGER_APP_XAH_LIMITATIONS_H
 
 // Needed to resolve target macros
 #include "bolos_target.h"
@@ -48,4 +48,4 @@
 
 #endif
 
-#endif  // LEDGER_APP_XRP_LIMITATIONS_H
+#endif  // LEDGER_APP_XAH_LIMITATIONS_H
