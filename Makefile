@@ -28,7 +28,7 @@ include $(BOLOS_SDK)/Makefile.defines
 APPNAME = XAH
 
 APPVERSION_M=1
-APPVERSION_N=0
+APPVERSION_N=1
 APPVERSION_P=0
 APPVERSION=$(APPVERSION_M).$(APPVERSION_N).$(APPVERSION_P)
 
@@ -44,6 +44,7 @@ ICON_NANOX = img/nanox_app_xah.gif
 ICON_NANOSP = img/nanox_app_xah.gif
 ICON_STAX = img/stax_app_xah.gif
 ICON_FLEX = img/flex_app_xah.gif
+ICON_APEX_P = img/apex_app_xah.png
 
 # Application allowed derivation curves.
 # Possibles curves are: secp256k1, secp256r1, ed25519 and bls12381g1
@@ -79,7 +80,7 @@ VARIANT_VALUES = xah
 #HAVE_APPLICATION_FLAG_DERIVE_MASTER = 1
 #HAVE_APPLICATION_FLAG_GLOBAL_PIN = 1
 HAVE_APPLICATION_FLAG_BOLOS_SETTINGS = 1
-HAVE_APPLICATION_FLAG_LIBRARY = 1
+# HAVE_APPLICATION_FLAG_LIBRARY = 1
 
 ########################################
 # Application communication interfaces #
