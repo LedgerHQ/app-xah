@@ -46,4 +46,14 @@
             (char *) (text)                                               \
     }
 
+#if defined(TARGET_STAX) || defined(TARGET_FLEX)
+#define ICON_APP_XAH     C_icon_XAH_64px
+#define ICON_APP_HOME    ICON_APP_XAH
+#define ICON_APP_WARNING C_Warning_64px
+#elif defined(TARGET_APEX_P)
+#define ICON_APP_XAH     C_icon_XAH_48px
+#define ICON_APP_HOME    ICON_APP_XAH
+#define ICON_APP_WARNING LARGE_WARNING_ICON
+#endif
+
 #endif  // LEDGER_APP_XAH_UI_H
