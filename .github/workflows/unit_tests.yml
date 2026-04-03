@@ -22,6 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt-get update
           apt-get install -y libssl-dev libcmocka-dev
 
       - name: Build unit tests
