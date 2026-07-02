@@ -65,7 +65,9 @@ class Errors(IntEnum):
 class XAHClient:
     CLA = 0xE0
 
-    def __init__(self, client: BackendInterface, firmware: Firmware, navigator: Navigator) -> None:
+    def __init__(
+        self, client: BackendInterface, firmware: Firmware, navigator: Navigator
+    ) -> None:
         if not isinstance(client, BackendInterface):
             raise TypeError("client must be an instance of BackendInterface")
         self._client = client
@@ -96,8 +98,9 @@ class XAHClient:
 
         return unpack_configuration_response(reply.data)
 
-    def get_pubkey_no_confirm(self, path: bytes = DEFAULT_BIP32_PATH,
-                              chain_code: bool = False) -> Tuple[int, str, int, str]:
+    def get_pubkey_no_confirm(
+        self, path: bytes = DEFAULT_BIP32_PATH, chain_code: bool = False
+    ) -> Tuple[int, str, int, str]:
         p2 = P2.CURVE_SECP256K1
         if chain_code:
             p2 |= P2.CHAIN_CODE  # type: ignore[assignment]
