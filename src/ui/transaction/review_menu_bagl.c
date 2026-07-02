@@ -15,19 +15,20 @@
  *  limitations under the License.
  ********************************************************************************/
 #ifdef HAVE_BAGL
-#include "review_menu.h"
 #include <os.h>
 #include <os_io_seproxyhal.h>
 #include <string.h>
 #include <ux.h>
-#include "global.h"
-#include "transaction.h"
-#include "fmt.h"
 
-parseResult_t *transaction;
+#include "fmt.h"
+#include "global.h"
+#include "review_menu.h"
+#include "transaction.h"
+
+parseResult_t* transaction;
 resultAction_t approval_menu_callback;
 
-const ux_flow_step_t *ux_review_flow[MAX_FIELD_COUNT + 3];
+const ux_flow_step_t* ux_review_flow[MAX_FIELD_COUNT + 3];
 
 static void update_content(int stack_slot);
 
@@ -60,36 +61,35 @@ UX_STEP_CB(
         });
 // clang-format on
 
-static void update_title(field_t *field, field_name_t *title) {
-    const char *name = resolve_field_name(field);
+static void update_title(field_t* field, field_name_t* title) {
+    const char* name = resolve_field_name(field);
     strncpy(title->buf, name, sizeof(title->buf));
     title->buf[sizeof(title->buf) - 1] = '\x00';
 
     size_t len = strlen(title->buf);
     if (field->array_info.type == ARRAY_PATHSET) {
-        snprintf(title->buf + len,
-                 sizeof(title->buf) - len,
-                 " [P%d: S%d]",
-                 field->array_info.index1,
-                 field->array_info.index2);
+        snprintf(title->buf + len, sizeof(title->buf) - len, " [P%d: S%d]",
+                 field->array_info.index1, field->array_info.index2);
     } else if (field->array_info.type != ARRAY_NONE) {
-        snprintf(title->buf + len, sizeof(title->buf) - len, " [%d]", field->array_info.index1);
+        snprintf(title->buf + len, sizeof(title->buf) - len, " [%d]",
+                 field->array_info.index1);
     }
 }
 
-static void update_value(field_t *field, field_value_t *value) {
+static void update_value(field_t* field, field_value_t* value) {
     format_field(field, value);
 }
 
 static void update_content(int stack_slot) {
     int step_index = G_ux.flow_stack[stack_slot].index;
-    field_t *field = &transaction->fields[step_index];
+    field_t* field = &transaction->fields[step_index];
 
     update_title(field, &approval_strings.review.field_name);
     update_value(field, &approval_strings.review.field_value);
 }
 
-void display_review_menu(parseResult_t *transaction_param, resultAction_t callback) {
+void display_review_menu(parseResult_t* transaction_param,
+                         resultAction_t callback) {
     transaction = transaction_param;
     approval_menu_callback = callback;
 

@@ -16,31 +16,34 @@
  *  limitations under the License.
  ********************************************************************************/
 
+#include "get_public_key.h"
+
 #include <os.h>
 #include <string.h>
 
-#include "os_io_usb.h"
-#include "get_public_key.h"
+#include "address_ui.h"
 #include "constants.h"
 #include "global.h"
-#include "xah_helpers.h"
-#include "xah_pub_key.h"
-#include "xah_parse.h"
-#include "address_ui.h"
 #include "idle_menu.h"
+#include "os_io_usb.h"
+#include "xah_helpers.h"
+#include "xah_parse.h"
+#include "xah_pub_key.h"
 
 uint32_t set_result_get_public_key() {
     uint32_t tx = 0;
     uint32_t address_length = strlen(tmp_ctx.public_key_context.address.buf);
     G_io_apdu_buffer[tx++] = XAH_PUBKEY_SIZE;
-    xah_pubkey_t *pubkey = (xah_pubkey_t *) (G_io_apdu_buffer + tx);
+    xah_pubkey_t* pubkey = (xah_pubkey_t*)(G_io_apdu_buffer + tx);
     xah_compress_public_key(&tmp_ctx.public_key_context.public_key, pubkey);
     tx += XAH_PUBKEY_SIZE;
     G_io_apdu_buffer[tx++] = address_length;
-    memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.address.buf, address_length);
+    memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.address.buf,
+            address_length);
     tx += address_length;
     if (tmp_ctx.public_key_context.get_chaincode) {
-        memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.chain_code, 32);
+        memmove(G_io_apdu_buffer + tx, tmp_ctx.public_key_context.chain_code,
+                32);
         tx += 32;
     }
     return tx;
@@ -69,12 +72,9 @@ void on_address_rejected() {
 #endif
 }
 
-void handle_get_public_key(uint8_t p1,
-                           uint8_t p2,
-                           uint8_t *data_buffer,
-                           uint16_t data_length,
-                           volatile unsigned int *flags,
-                           volatile unsigned int *tx) {
+void handle_get_public_key(uint8_t p1, uint8_t p2, uint8_t* data_buffer,
+                           uint16_t data_length, volatile unsigned int* flags,
+                           volatile unsigned int* tx) {
     UNUSED(data_length);
 
     uint8_t bip32_path_length = *(data_buffer++);
@@ -96,22 +96,21 @@ void handle_get_public_key(uint8_t p1,
 
     curve = (((p2 & P2_ED25519) != 0) ? CX_CURVE_Ed25519 : CX_CURVE_256K1);
     tmp_ctx.public_key_context.get_chaincode = (p2_chain == P2_CHAINCODE);
-    uint8_t *chain_code =
-        tmp_ctx.public_key_context.get_chaincode ? tmp_ctx.public_key_context.chain_code : NULL;
+    uint8_t* chain_code = tmp_ctx.public_key_context.get_chaincode
+                              ? tmp_ctx.public_key_context.chain_code
+                              : NULL;
 
     io_seproxyhal_io_heartbeat();
     int error;
-    error = get_public_key(curve,
-                           data_buffer,
-                           bip32_path_length,
-                           &tmp_ctx.public_key_context.public_key,
-                           chain_code);
+    error = get_public_key(curve, data_buffer, bip32_path_length,
+                           &tmp_ctx.public_key_context.public_key, chain_code);
     if (error != 0) {
         THROW(error);
     }
 
     io_seproxyhal_io_heartbeat();
-    get_address(&tmp_ctx.public_key_context.public_key, &tmp_ctx.public_key_context.address);
+    get_address(&tmp_ctx.public_key_context.public_key,
+                &tmp_ctx.public_key_context.address);
 
     if (p1 == P1_NON_CONFIRM) {
         *tx = set_result_get_public_key();

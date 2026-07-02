@@ -17,9 +17,10 @@
 
 #ifdef HAVE_BAGL
 #include <os_io_seproxyhal.h>
-#include "idle_menu.h"
-#include "glyphs.h"
 #include <ux.h>
+
+#include "glyphs.h"
+#include "idle_menu.h"
 
 // clang-format off
 UX_STEP_NOCB(
@@ -47,7 +48,8 @@ UX_STEP_CB(
         });
 // clang-format on
 
-UX_FLOW(ux_idle_flow, &ux_idle_flow_1_step, &ux_idle_flow_2_step, &ux_idle_flow_3_step);
+UX_FLOW(ux_idle_flow, &ux_idle_flow_1_step, &ux_idle_flow_2_step,
+        &ux_idle_flow_3_step);
 
 void display_idle_menu() {
     if (G_ux.stack_count == 0) {
