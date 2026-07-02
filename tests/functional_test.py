@@ -4,6 +4,7 @@
 export LEDGER_PROXY_ADDRESS=127.0.0.1 LEDGER_PROXY_PORT=9999
 pytest-3 -v -s
 """
+
 from pathlib import Path
 import pytest
 from ledgerwallet.params import Bip32Path  # type: ignore [import]
@@ -18,16 +19,20 @@ from .utils import DEFAULT_PATH, DEFAULT_BIP32_PATH
 from .utils import verify_ecdsa_secp256k1, verify_version
 
 
-def test_app_configuration(backend: BackendInterface,
-                           firmware: Firmware,
-                           navigator: Navigator,
-                           default_screenshot_path: Path):
+def test_app_configuration(
+    backend: BackendInterface,
+    firmware: Firmware,
+    navigator: Navigator,
+    default_screenshot_path: Path,
+):
     xah = XAHClient(backend, firmware, navigator)
     version = xah.get_configuration()
     verify_version(default_screenshot_path, version)
 
 
-def test_sign_too_large(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
+def test_sign_too_large(
+    backend: BackendInterface, firmware: Firmware, navigator: Navigator
+):
     xah = XAHClient(backend, firmware, navigator)
     max_size = 10001
     payload = DEFAULT_BIP32_PATH + b"a" * (max_size - 4)
@@ -38,7 +43,9 @@ def test_sign_too_large(backend: BackendInterface, firmware: Firmware, navigator
         assert rapdu.status in [Errors.SW_WRONG_LENGTH, Errors.SW_INTERNAL_3]
 
 
-def test_sign_invalid_tx(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
+def test_sign_invalid_tx(
+    backend: BackendInterface, firmware: Firmware, navigator: Navigator
+):
     xah = XAHClient(backend, firmware, navigator)
     payload = DEFAULT_BIP32_PATH + b"a" * (40)
     try:
@@ -48,7 +55,9 @@ def test_sign_invalid_tx(backend: BackendInterface, firmware: Firmware, navigato
         assert rapdu.status in [Errors.SW_INTERNAL_1, Errors.SW_INTERNAL_2]
 
 
-def test_path_too_long(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
+def test_path_too_long(
+    backend: BackendInterface, firmware: Firmware, navigator: Navigator
+):
     xah = XAHClient(backend, firmware, navigator)
     path = Bip32Path.build(DEFAULT_PATH + "/0/0/0/0/0/0")
     try:
@@ -57,11 +66,13 @@ def test_path_too_long(backend: BackendInterface, firmware: Firmware, navigator:
         assert rapdu.status == Errors.SW_INVALID_PATH
 
 
-def test_get_public_key_no_confirm(backend: BackendInterface,
-                                   firmware: Firmware,
-                                   navigator: Navigator):
+def test_get_public_key_no_confirm(
+    backend: BackendInterface, firmware: Firmware, navigator: Navigator
+):
     xah = XAHClient(backend, firmware, navigator)
-    key_len, key_data, chain_len, chain_data = xah.get_pubkey_no_confirm(chain_code=True)
+    key_len, key_data, chain_len, chain_data = xah.get_pubkey_no_confirm(
+        chain_code=True
+    )
     ref_public_key, ref_chain_code = calculate_public_key_and_chaincode(
         CurveChoice.Secp256k1, DEFAULT_PATH, compress_public_key=True
     )
@@ -71,10 +82,12 @@ def test_get_public_key_no_confirm(backend: BackendInterface,
     print(f"Chain code[{chain_len}]: {ref_chain_code}")
 
 
-def test_get_public_key_confirm(backend: BackendInterface,
-                                firmware: Firmware,
-                                navigator: Navigator,
-                                scenario_navigator: NavigateWithScenario):
+def test_get_public_key_confirm(
+    backend: BackendInterface,
+    firmware: Firmware,
+    navigator: Navigator,
+    scenario_navigator: NavigateWithScenario,
+):
     xah = XAHClient(backend, firmware, navigator)
     with xah.get_pubkey_confirm():
         scenario_navigator.address_review_approve()
@@ -84,10 +97,12 @@ def test_get_public_key_confirm(backend: BackendInterface,
     assert reply and reply.status == Errors.SW_SUCCESS
 
 
-def test_get_public_key_reject(backend: BackendInterface,
-                               firmware: Firmware,
-                               navigator: Navigator,
-                               scenario_navigator: NavigateWithScenario):
+def test_get_public_key_reject(
+    backend: BackendInterface,
+    firmware: Firmware,
+    navigator: Navigator,
+    scenario_navigator: NavigateWithScenario,
+):
     xah = XAHClient(backend, firmware, navigator)
 
     with pytest.raises(ExceptionRAPDU) as err:
@@ -99,10 +114,12 @@ def test_get_public_key_reject(backend: BackendInterface,
     assert len(err.value.data) == 0
 
 
-def test_sign_reject(backend: BackendInterface,
-                     firmware: Firmware,
-                     navigator: Navigator,
-                     scenario_navigator: NavigateWithScenario):
+def test_sign_reject(
+    backend: BackendInterface,
+    firmware: Firmware,
+    navigator: Navigator,
+    scenario_navigator: NavigateWithScenario,
+):
     xah = XAHClient(backend, firmware, navigator)
 
     # pragma pylint: disable=line-too-long
@@ -123,11 +140,13 @@ def test_sign_reject(backend: BackendInterface,
     assert len(err.value.data) == 0
 
 
-def test_sign_valid_tx(backend: BackendInterface,
-                       firmware: Firmware,
-                       navigator: Navigator,
-                       scenario_navigator: NavigateWithScenario,
-                       raw_tx_path: str):
+def test_sign_valid_tx(
+    backend: BackendInterface,
+    firmware: Firmware,
+    navigator: Navigator,
+    scenario_navigator: NavigateWithScenario,
+    raw_tx_path: str,
+):
     if raw_tx_path.endswith("19-really-stupid-tx.raw"):
         pytest.skip(f"skip invalid tx from '{Path(raw_tx_path).stem}'")
 
@@ -137,7 +156,7 @@ def test_sign_valid_tx(backend: BackendInterface,
         tx = fp.read()
 
     index = raw_tx_path.index("/testcases/") + len("/testcases/")
-    snapdir = str(Path(raw_tx_path[index :]).with_suffix(""))
+    snapdir = str(Path(raw_tx_path[index:]).with_suffix(""))
 
     backend.wait_for_home_screen()
     if firmware.device.startswith("nano"):

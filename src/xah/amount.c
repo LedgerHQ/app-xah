@@ -16,30 +16,31 @@
  *  limitations under the License.
  ********************************************************************************/
 
-#include <string.h>
-#include <stdbool.h>
-
 #include "amount.h"
-#include "fmt.h"
-#include "xah_helpers.h"
-#include "readers.h"
-#include "number_helpers.h"
-#include "limitations.h"
-#include "ascii_strings.h"
 
-#define EXP_MIN      -96
-#define EXP_MAX      80
+#include <stdbool.h>
+#include <string.h>
+
+#include "ascii_strings.h"
+#include "fmt.h"
+#include "limitations.h"
+#include "number_helpers.h"
+#include "readers.h"
+#include "xah_helpers.h"
+
+#define EXP_MIN -96
+#define EXP_MAX 80
 #define MANTISSA_MIN 1000000000000000
 #define MANTISSA_MAX 9999999999999999
 
-static void normalize(uint64_t *mantissa_param, int16_t *exponent_param) {
+static void normalize(uint64_t* mantissa_param, int16_t* exponent_param) {
     while (*mantissa_param > 0 && *mantissa_param % 10 == 0) {
         *mantissa_param = *mantissa_param / 10;
         (*exponent_param)++;
     }
 }
 
-static int print_uint64_t(char *dst, uint16_t len, uint64_t value) {
+static int print_uint64_t(char* dst, uint16_t len, uint64_t value) {
     uint16_t num_digits = 0, i;
     uint64_t base = 1;
 
@@ -63,11 +64,8 @@ static int print_uint64_t(char *dst, uint16_t len, uint64_t value) {
     return 0;
 }
 
-static int parse_decimal_number(char *dst,
-                                size_t max_len,
-                                uint8_t sign,
-                                int16_t exponent,
-                                uint64_t mantissa) {
+static int parse_decimal_number(char* dst, size_t max_len, uint8_t sign,
+                                int16_t exponent, uint64_t mantissa) {
     if (max_len < 100) {
         return -1;
     }
@@ -126,7 +124,7 @@ static int parse_decimal_number(char *dst,
     return 0;
 }
 
-static int format_xah(uint64_t amount, field_value_t *dst) {
+static int format_xah(uint64_t amount, field_value_t* dst) {
     if (!(amount & 0x4000000000000000)) {
         return -1;
     }
@@ -139,7 +137,7 @@ static int format_xah(uint64_t amount, field_value_t *dst) {
     return 0;
 }
 
-static bool is_all_zeros(const uint8_t *data, uint8_t length) {
+static bool is_all_zeros(const uint8_t* data, uint8_t length) {
     for (size_t i = 0; i < length; ++i) {
         if (data[i] != 0) {
             return false;
@@ -149,15 +147,16 @@ static bool is_all_zeros(const uint8_t *data, uint8_t length) {
     return true;
 }
 
-static bool has_non_standard_currency_internal(const uint8_t *currency_data) {
+static bool has_non_standard_currency_internal(const uint8_t* currency_data) {
     return currency_data[0] != 0x00;
 }
 
-bool has_non_standard_currency(field_t *field) {
+bool has_non_standard_currency(field_t* field) {
     return has_non_standard_currency_internal(&field->data.ptr[8]);
 }
 
-static void format_standard_currency(xah_currency_t *currency, char *buf, size_t size) {
+static void format_standard_currency(xah_currency_t* currency, char* buf,
+                                     size_t size) {
     if (has_non_standard_currency_internal(currency->buf)) {
     } else if (is_all_zeros(currency->buf, 20)) {
         // Special case for XAH currency
@@ -168,15 +167,19 @@ static void format_standard_currency(xah_currency_t *currency, char *buf, size_t
     }
 }
 
-static void format_non_standard_currency(xah_currency_t *currency, field_value_t *dst) {
+static void format_non_standard_currency(xah_currency_t* currency,
+                                         field_value_t* dst) {
     if (has_non_standard_currency_internal(currency->buf)) {
         // Nonstandard currency code
-        bool contains_only_ascii = is_purely_ascii(currency->buf, sizeof(currency->buf), true);
-        if (contains_only_ascii && currency->buf[sizeof(currency->buf) - 1] == '\x00' &&
-            strstr((char *) currency->buf, "XAH")) {
+        bool contains_only_ascii =
+            is_purely_ascii(currency->buf, sizeof(currency->buf), true);
+        if (contains_only_ascii &&
+            currency->buf[sizeof(currency->buf) - 1] == '\x00' &&
+            strstr((char*)currency->buf, "XAH")) {
             memcpy(dst->buf, currency->buf, 20);
         } else {
-            read_hex(dst->buf, sizeof(dst->buf), currency->buf, sizeof(currency->buf));
+            read_hex(dst->buf, sizeof(dst->buf), currency->buf,
+                     sizeof(currency->buf));
         }
     } else if (is_all_zeros(currency->buf, sizeof(currency->buf))) {
         // Special case for XAH currency
@@ -187,12 +190,12 @@ static void format_non_standard_currency(xah_currency_t *currency, field_value_t
     }
 }
 
-static int format_issued_currency(uint64_t value, char *buf, size_t size) {
-    uint8_t sign = (uint8_t) ((value >> 62u) & 0x01u);
-    int16_t exponent = (int16_t) (((value >> 54u) & 0xFFu) - 97);
+static int format_issued_currency(uint64_t value, char* buf, size_t size) {
+    uint8_t sign = (uint8_t)((value >> 62u) & 0x01u);
+    int16_t exponent = (int16_t)(((value >> 54u) & 0xFFu) - 97);
     uint64_t mantissa = value & 0x3FFFFFFFFFFFFFu;
     size_t len = strlen(buf);
-    char *p;
+    char* p;
 
     p = buf + len;
     size -= len;
@@ -217,14 +220,14 @@ static int format_issued_currency(uint64_t value, char *buf, size_t size) {
     return parse_decimal_number(p, size, sign, exponent, mantissa);
 }
 
-void amount_formatter(field_t *field, field_value_t *dst) {
+void amount_formatter(field_t* field, field_value_t* dst) {
     uint64_t value = read_unsigned64(field->data.ptr);
     int error;
 
     if (field->length == XAH_AMOUNT_LEN) {
         error = format_xah(value, dst);
     } else if (field->length == ISSUED_CURRENCY_LEN) {
-        xah_currency_t *currency = (xah_currency_t *) &field->data.ptr[8];
+        xah_currency_t* currency = (xah_currency_t*)&field->data.ptr[8];
         format_standard_currency(currency, dst->buf, sizeof(dst->buf));
         error = format_issued_currency(value, dst->buf, sizeof(dst->buf));
     } else {
@@ -236,7 +239,7 @@ void amount_formatter(field_t *field, field_value_t *dst) {
     }
 }
 
-void currency_formatter(field_t *field, field_value_t *dst) {
-    xah_currency_t *currency = (xah_currency_t *) field->data.ptr;
+void currency_formatter(field_t* field, field_value_t* dst) {
+    xah_currency_t* currency = (xah_currency_t*)field->data.ptr;
     format_non_standard_currency(currency, dst);
 }

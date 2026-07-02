@@ -17,6 +17,7 @@
 #ifdef HAVE_NBGL
 #include <os_io_seproxyhal.h>
 #include <ux.h>
+
 #include "glyphs.h"
 #include "idle_menu.h"
 #include "nbgl_use_case.h"
@@ -26,23 +27,15 @@
 static const char* const infoTypes[] = {"Version", "Developer"};
 static const char* const infoContents[] = {APPVERSION, "Ledger"};
 
-static void on_quit_clbk(void) {
-    os_sched_exit(-1);
-}
+static void on_quit_clbk(void) { os_sched_exit(-1); }
 
 void display_idle_menu() {
     static nbgl_contentInfoList_t infosList = {0};
 
     infosList.nbInfos = NB_INFO_FIELDS;
-    infosList.infoTypes = (const char**) infoTypes;
-    infosList.infoContents = (const char**) infoContents;
-    nbgl_useCaseHomeAndSettings(APPNAME,
-                                &ICON_APP_HOME,
-                                NULL,
-                                INIT_HOME_PAGE,
-                                NULL,
-                                &infosList,
-                                NULL,
-                                on_quit_clbk);
+    infosList.infoTypes = (const char**)infoTypes;
+    infosList.infoContents = (const char**)infoContents;
+    nbgl_useCaseHomeAndSettings(APPNAME, &ICON_APP_HOME, NULL, INIT_HOME_PAGE,
+                                NULL, &infosList, NULL, on_quit_clbk);
 }
 #endif  // HAVE_NBGL

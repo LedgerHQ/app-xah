@@ -22,10 +22,10 @@
 #include <stdbool.h>
 #include "fields.h"
 
-void amount_formatter(field_t* field, field_value_t* dst);
-void currency_formatter(field_t* field, field_value_t* dst);
+void amount_formatter(field_t *field, field_value_t *dst);
+void currency_formatter(field_t *field, field_value_t *dst);
 
-bool has_non_standard_currency(field_t* field);
+bool has_non_standard_currency(field_t *field);
 
 #define XAH_AMOUNT_LEN      8
 #define ISSUED_CURRENCY_LEN 48

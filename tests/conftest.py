@@ -9,6 +9,7 @@ from ragger.conftest import configuration
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 configuration.OPTIONAL.BACKEND_SCOPE = "session"
 
+
 # Retrieve all test cases
 def pytest_generate_tests(metafunc):
     # retrieve the list of .raw files in the testcases directory
@@ -19,6 +20,7 @@ def pytest_generate_tests(metafunc):
     # paths
     if "raw_tx_path" in metafunc.fixturenames:
         metafunc.parametrize("raw_tx_path", sorted(paths), scope="function")
+
 
 #########################
 ### CONFIGURATION END ###

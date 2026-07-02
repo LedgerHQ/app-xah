@@ -1,19 +1,18 @@
-#include <setjmp.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <setjmp.h>
+#include <cmocka.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <cmocka.h>
-
-#include "cx.h"
-#include "../src/xah/xah_parse.h"
-#include "../src/xah/xah_helpers.h"
 #include "../src/xah/fmt.h"
+#include "../src/xah/xah_helpers.h"
+#include "../src/xah/xah_parse.h"
+#include "cx.h"
 
 parseContext_t parse_context;
 
-static const char *testcases[] = {
+static const char* testcases[] = {
     "../testcases/01-payment/01-basic.raw",
     "../testcases/01-payment/02-destination-tag.raw",
     "../testcases/01-payment/03-source-tag.raw",
@@ -125,10 +124,10 @@ static const char *testcases[] = {
     NULL,
 };
 
-static uint8_t *load_transaction_data(const char *filename, size_t *size) {
-    uint8_t *data;
+static uint8_t* load_transaction_data(const char* filename, size_t* size) {
+    uint8_t* data;
 
-    FILE *f = fopen(filename, "rb");
+    FILE* f = fopen(filename, "rb");
     assert_non_null(f);
 
     fseek(f, 0, SEEK_END);
@@ -144,44 +143,43 @@ static uint8_t *load_transaction_data(const char *filename, size_t *size) {
     return data;
 }
 
-static void update_title(field_t *field, field_name_t *title) {
-    const char *name = resolve_field_name(field);
+static void update_title(field_t* field, field_name_t* title) {
+    const char* name = resolve_field_name(field);
     strncpy(title->buf, name, sizeof(title->buf));
     title->buf[sizeof(title->buf) - 1] = '\x00';
 
     size_t len = strlen(title->buf);
     if (field->array_info.type == ARRAY_PATHSET) {
-        snprintf(title->buf + len,
-                 sizeof(title->buf) - len,
-                 " [P%d: S%d]",
-                 field->array_info.index1,
-                 field->array_info.index2);
+        snprintf(title->buf + len, sizeof(title->buf) - len, " [P%d: S%d]",
+                 field->array_info.index1, field->array_info.index2);
     } else if (field->array_info.type != ARRAY_NONE) {
-        snprintf(title->buf + len, sizeof(title->buf) - len, " [%d]", field->array_info.index1);
+        snprintf(title->buf + len, sizeof(title->buf) - len, " [%d]",
+                 field->array_info.index1);
     }
 }
 
-static void update_value(field_t *field, field_value_t *value) {
+static void update_value(field_t* field, field_value_t* value) {
     format_field(field, value);
 }
 
-static void get_result_filename(const char *filename, char *path, size_t size) {
+static void get_result_filename(const char* filename, char* path, size_t size) {
     strncpy(path, filename, size);
 
-    char *ext = strstr(path, ".raw");
+    char* ext = strstr(path, ".raw");
     assert_non_null(ext);
     memcpy(ext, ".txt", 4);
 }
 
-static void generate_expected_result(const char *filename, parseResult_t *transaction) {
+static void generate_expected_result(const char* filename,
+                                     parseResult_t* transaction) {
     char path[1024];
     get_result_filename(filename, path, sizeof(path));
 
-    FILE *fp = fopen(path, "w");
+    FILE* fp = fopen(path, "w");
     assert_non_null(fp);
 
     for (int i = 0; i < transaction->num_fields; ++i) {
-        field_t *field = &transaction->fields[i];
+        field_t* field = &transaction->fields[i];
         field_name_t field_name;
         field_value_t field_value;
         update_title(field, &field_name);
@@ -192,16 +190,17 @@ static void generate_expected_result(const char *filename, parseResult_t *transa
     fclose(fp);
 }
 
-static void check_transaction_results(const char *filename, parseResult_t *transaction) {
+static void check_transaction_results(const char* filename,
+                                      parseResult_t* transaction) {
     printf("[*] %s\n", filename);
     char path[1024];
     get_result_filename(filename, path, sizeof(path));
 
-    FILE *fp = fopen(path, "r");
+    FILE* fp = fopen(path, "r");
     assert_non_null(fp);
 
     for (int i = 0; i < transaction->num_fields; ++i) {
-        field_t *field = &transaction->fields[i];
+        field_t* field = &transaction->fields[i];
         field_name_t field_name;
         field_value_t field_value;
         update_title(field, &field_name);
@@ -210,15 +209,15 @@ static void check_transaction_results(const char *filename, parseResult_t *trans
         char line[4096];
         assert_non_null(fgets(line, sizeof(line), fp));
 
-        char *expected_title = line;
-        char *expected_value = strstr(line, "; ");
+        char* expected_title = line;
+        char* expected_value = strstr(line, "; ");
         assert_non_null(expected_value);
 
         *expected_value = '\x00';
         assert_string_equal(expected_title, field_name.buf);
 
         expected_value += 2;
-        char *p = strchr(expected_value, '\n');
+        char* p = strchr(expected_value, '\n');
         if (p != NULL) {
             *p = '\x00';
         }
@@ -229,16 +228,16 @@ static void check_transaction_results(const char *filename, parseResult_t *trans
     fclose(fp);
 }
 
-static void test_tx(const char *filename) {
+static void test_tx(const char* filename) {
     size_t size;
-    uint8_t *data = load_transaction_data(filename, &size);
+    uint8_t* data = load_transaction_data(filename, &size);
 
     memset(&parse_context, 0, sizeof(parse_context));
     parse_context.data = data;
     parse_context.length = size;
     assert_int_equal(parse_tx(&parse_context), 0);
 
-    parseResult_t *transaction = &parse_context.result;
+    parseResult_t* transaction = &parse_context.result;
     if (false) {
         generate_expected_result(filename, transaction);
     }
@@ -247,10 +246,10 @@ static void test_tx(const char *filename) {
     free(data);
 }
 
-void test_transactions(void **state) {
-    (void) state;
+void test_transactions(void** state) {
+    (void)state;
 
-    for (const char **testcase = testcases; *testcase != NULL; testcase++) {
+    for (const char** testcase = testcases; *testcase != NULL; testcase++) {
         test_tx(*testcase);
     }
 }

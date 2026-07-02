@@ -5,10 +5,13 @@ include(CTest)
 
 set(CMAKE_C_STANDARD 11)
 
-# required for fuzzing
-set(CMAKE_C_COMPILER /usr/bin/clang)
+option(ENABLE_FUZZING "Build fuzz targets (requires Clang with fuzzer support)" OFF)
 
 enable_testing()
+
+# Coverage instrumentation: generates .gcno/.gcda files consumed by lcov/gcov
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 --coverage")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 
 include_directories(
   include
@@ -75,16 +78,18 @@ add_executable(test_tx
   include/os.h
 )
 
-add_executable(fuzz_tx
-  src/fuzz_tx.c
-  src/cx.c
-  include/bolos_target.h
-  include/cx.h
-  include/os.h
-)
+if(ENABLE_FUZZING)
+  add_executable(fuzz_tx
+    src/fuzz_tx.c
+    src/cx.c
+    include/bolos_target.h
+    include/cx.h
+    include/os.h
+  )
+  target_compile_options(fuzz_tx PRIVATE -Wall -fsanitize=fuzzer,address -g -ggdb2)
+  target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl xah -fsanitize=fuzzer,address)
+endif()
 
-target_compile_options(fuzz_tx PRIVATE -Wall -fsanitize=fuzzer,address -g -ggdb2)
-target_link_libraries(fuzz_tx PRIVATE cmocka crypto ssl xah -fsanitize=fuzzer,address)
 target_link_libraries(test_printers PRIVATE cmocka crypto ssl xah)
 target_link_libraries(test_swap PRIVATE cmocka crypto ssl xah)
 target_link_libraries(test_tx PRIVATE cmocka crypto ssl xah)

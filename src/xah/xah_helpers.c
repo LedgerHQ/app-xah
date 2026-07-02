@@ -15,26 +15,28 @@
  *  limitations under the License.
  ********************************************************************************/
 
+#include "xah_helpers.h"
+
 #include <stdbool.h>
 #include <string.h>
 
-#include "xah_helpers.h"
-#include "os.h"
-#include "number_helpers.h"
 #include "limitations.h"
+#include "number_helpers.h"
+#include "os.h"
 
 typedef struct {
     uint8_t buf[MAX_ENC_INPUT_SIZE];
     uint8_t length;
 } base58_buf_t;
 
-static const char bas_e58_alphabet[] = {'r', 'p', 's', 'h', 'n', 'a', 'f', '3', '9', 'w', 'B', 'U',
-                                        'D', 'N', 'E', 'G', 'H', 'J', 'K', 'L', 'M', '4', 'P', 'Q',
-                                        'R', 'S', 'T', '7', 'V', 'W', 'X', 'Y', 'Z', '2', 'b', 'c',
-                                        'd', 'e', 'C', 'g', '6', '5', 'j', 'k', 'm', '8', 'o', 'F',
-                                        'q', 'i', '1', 't', 'u', 'v', 'A', 'x', 'y', 'z'};
+static const char bas_e58_alphabet[] = {
+    'r', 'p', 's', 'h', 'n', 'a', 'f', '3', '9', 'w', 'B', 'U', 'D', 'N', 'E',
+    'G', 'H', 'J', 'K', 'L', 'M', '4', 'P', 'Q', 'R', 'S', 'T', '7', 'V', 'W',
+    'X', 'Y', 'Z', '2', 'b', 'c', 'd', 'e', 'C', 'g', '6', '5', 'j', 'k', 'm',
+    '8', 'o', 'F', 'q', 'i', '1', 't', 'u', 'v', 'A', 'x', 'y', 'z'};
 
-static size_t xah_encode_base58_address(const base58_buf_t *in, xah_address_t *out) {
+static size_t xah_encode_base58_address(const base58_buf_t* in,
+                                        xah_address_t* out) {
     unsigned char buffer[MAX_ENC_INPUT_SIZE * 138 / 100 + 1] = {0};
     size_t i = 0, j;
     size_t start_at, stop_at;
@@ -50,7 +52,7 @@ static size_t xah_encode_base58_address(const base58_buf_t *in, xah_address_t *o
     stop_at = output_size - 1;
     for (start_at = zero_count; start_at < in->length; start_at++) {
         int carry = in->buf[start_at];
-        for (j = output_size - 1; (int) j >= 0; j--) {
+        for (j = output_size - 1; (int)j >= 0; j--) {
             carry += 256 * buffer[j];
             buffer[j] = carry % 58;
             carry /= 58;
@@ -78,7 +80,7 @@ static size_t xah_encode_base58_address(const base58_buf_t *in, xah_address_t *o
     return outlen;
 }
 
-cx_err_t xah_public_key_hash160(xah_pubkey_t *pubkey, uint8_t *out) {
+cx_err_t xah_public_key_hash160(xah_pubkey_t* pubkey, uint8_t* out) {
     union {
         cx_sha256_t shasha;
         cx_ripemd160_t riprip;
@@ -87,17 +89,16 @@ cx_err_t xah_public_key_hash160(xah_pubkey_t *pubkey, uint8_t *out) {
     cx_err_t error = CX_INTERNAL_ERROR;
 
     cx_sha256_init(&u.shasha);
-    error =
-        cx_hash_no_throw(&u.shasha.header, CX_LAST, pubkey->buf, sizeof(pubkey->buf), buffer, 32);
+    error = cx_hash_no_throw(&u.shasha.header, CX_LAST, pubkey->buf,
+                             sizeof(pubkey->buf), buffer, 32);
     if (error != CX_OK) return error;
     cx_ripemd160_init(&u.riprip);
     return cx_hash_no_throw(&u.riprip.header, CX_LAST, buffer, 32, out, 20);
 }
 
-size_t xah_public_key_to_encoded_base58(xah_pubkey_t *pubkey,
-                                        xah_account_t *account,
-                                        xah_address_t *out,
-                                        uint16_t version) {
+size_t xah_public_key_to_encoded_base58(xah_pubkey_t* pubkey,
+                                        xah_account_t* account,
+                                        xah_address_t* out, uint16_t version) {
     base58_buf_t tmp;
     unsigned char checksum_buffer[32];
     cx_sha256_t hash;
@@ -120,11 +121,12 @@ size_t xah_public_key_to_encoded_base58(xah_pubkey_t *pubkey,
     }
 
     cx_sha256_init(&hash);
-    error =
-        cx_hash_no_throw(&hash.header, CX_LAST, tmp.buf, 20 + version_size, checksum_buffer, 32);
+    error = cx_hash_no_throw(&hash.header, CX_LAST, tmp.buf, 20 + version_size,
+                             checksum_buffer, 32);
     if (error != CX_OK) return 0;
     cx_sha256_init(&hash);
-    error = cx_hash_no_throw(&hash.header, CX_LAST, checksum_buffer, 32, checksum_buffer, 32);
+    error = cx_hash_no_throw(&hash.header, CX_LAST, checksum_buffer, 32,
+                             checksum_buffer, 32);
     if (error != CX_OK) return 0;
 
     memmove(tmp.buf + 20 + version_size, checksum_buffer, 4);
@@ -133,7 +135,8 @@ size_t xah_public_key_to_encoded_base58(xah_pubkey_t *pubkey,
     return xah_encode_base58_address(&tmp, out);
 }
 
-void xah_compress_public_key(cx_ecfp_public_key_t *public_key, xah_pubkey_t *out) {
+void xah_compress_public_key(cx_ecfp_public_key_t* public_key,
+                             xah_pubkey_t* out) {
     if (public_key->curve == CX_CURVE_256K1) {
         out->buf[0] = ((public_key->W[64] & 1u) ? 0x03 : 0x02);
         memmove(out->buf + 1, public_key->W + 1, 32);
@@ -150,36 +153,32 @@ void xah_compress_public_key(cx_ecfp_public_key_t *public_key, xah_pubkey_t *out
     }
 }
 
-bool parse_bip32_path(uint8_t *path,
-                      size_t path_length,
-                      uint32_t *path_parsed,
+bool parse_bip32_path(uint8_t* path, size_t path_length, uint32_t* path_parsed,
                       size_t path_parsed_length) {
     if ((path_length < 0x01) || (path_length > path_parsed_length)) {
         return false;
     }
 
     for (size_t i = 0; i < path_length; i++) {
-        path_parsed[i] = (path[0] << 24u) | (path[1] << 16u) | (path[2] << 8u) | (path[3]);
+        path_parsed[i] =
+            (path[0] << 24u) | (path[1] << 16u) | (path[2] << 8u) | (path[3]);
         path += 4;
     }
 
     return true;
 }
 
-void get_address(cx_ecfp_public_key_t *pubkey, xah_address_t *address) {
+void get_address(cx_ecfp_public_key_t* pubkey, xah_address_t* address) {
     /* sizeof(xah_pubkey_t) < sizeof(xah_address_t) */
-    xah_pubkey_t *p = (xah_pubkey_t *) address;
+    xah_pubkey_t* p = (xah_pubkey_t*)address;
     xah_compress_public_key(pubkey, p);
 
     uint8_t addr_len = xah_public_key_to_encoded_base58(p, NULL, address, 0);
     address->buf[addr_len] = '\x00';
 }
 
-bool adjust_decimals(const char *src,
-                     uint32_t src_length,
-                     char *target,
-                     uint32_t target_length,
-                     uint8_t decimals) {
+bool adjust_decimals(const char* src, uint32_t src_length, char* target,
+                     uint32_t target_length, uint8_t decimals) {
     uint32_t start_offset;
     uint32_t last_zero_offset = 0;
     uint32_t offset = 0;
@@ -243,11 +242,11 @@ bool adjust_decimals(const char *src,
     return true;
 }
 
-#define CURRENCY      "XAH "
+#define CURRENCY "XAH "
 #define CURRENCY_SIZE (sizeof(CURRENCY) - 1)
 
 /* return -1 on error, 0 otherwise */
-int xah_print_amount(uint64_t amount, char *out, size_t outlen) {
+int xah_print_amount(uint64_t amount, char* out, size_t outlen) {
     char tmp[20];
     uint32_t num_digits = 0, i;
     uint64_t base;
@@ -268,7 +267,8 @@ int xah_print_amount(uint64_t amount, char *out, size_t outlen) {
 
     char tmp2[25];
     strncpy(tmp2, CURRENCY, sizeof(tmp2));
-    if (!adjust_decimals(tmp, i, tmp2 + CURRENCY_SIZE, sizeof(tmp2) - CURRENCY_SIZE, 6)) {
+    if (!adjust_decimals(tmp, i, tmp2 + CURRENCY_SIZE,
+                         sizeof(tmp2) - CURRENCY_SIZE, 6)) {
         return -1;
     }
 

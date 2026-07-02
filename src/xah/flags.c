@@ -16,23 +16,24 @@
  *  limitations under the License.
  ********************************************************************************/
 
+#include "flags.h"
+
 #include <string.h>
 
-#include "flags.h"
+#include "fmt.h"
 #include "readers.h"
 #include "sign_transaction.h"
 #include "transaction_types.h"
-#include "fmt.h"
 
 #define HAS_FLAG(value, flag) ((value) & (flag)) == flag
 
-bool is_flag(const field_t *field) {
+bool is_flag(const field_t* field) {
     return field->data_type == STI_UINT32 &&
            (field->id == XAH_UINT32_FLAGS || field->id == XAH_UINT32_SET_FLAG ||
             field->id == XAH_UINT32_CLEAR_FLAG);
 }
 
-bool is_flag_hidden(const field_t *field) {
+bool is_flag_hidden(const field_t* field) {
     if (is_flag(field)) {
         uint32_t value = field->data.u32;
 
@@ -42,12 +43,12 @@ bool is_flag_hidden(const field_t *field) {
     return false;
 }
 
-static size_t set_error_value(field_value_t *out) {
+static size_t set_error_value(field_value_t* out) {
     strncpy(out->buf, "[ERROR: FAILED TO APPEND ITEM]", sizeof(out->buf));
     return sizeof(out->buf);
 }
 
-static size_t append_item(field_value_t *out, size_t offset, const char *in) {
+static size_t append_item(field_value_t* out, size_t offset, const char* in) {
     size_t len = strlen(in);
 
     if (offset != 0) {
@@ -69,14 +70,15 @@ static size_t append_item(field_value_t *out, size_t offset, const char *in) {
     return offset + len;
 }
 
-static void format_account_set_transaction_flags(uint32_t value, field_value_t *dst) {
+static void format_account_set_transaction_flags(uint32_t value,
+                                                 field_value_t* dst) {
 // AccountSet flags
-#define TF_REQUIRE_DEST_TAG  0x00010000u
+#define TF_REQUIRE_DEST_TAG 0x00010000u
 #define TF_OPTIONAL_DEST_TAG 0x00020000u
-#define TF_REQUIRE_AUTH      0x00040000u
-#define TF_OPTIONAL_AUTH     0x00080000u
-#define TF_DISALLOW_XAH      0x00100000u
-#define TF_ALLOW_XAH         0x00200000u
+#define TF_REQUIRE_AUTH 0x00040000u
+#define TF_OPTIONAL_AUTH 0x00080000u
+#define TF_DISALLOW_XAH 0x00100000u
+#define TF_ALLOW_XAH 0x00200000u
 
     size_t offset = 0;
     if (HAS_FLAG(value, TF_REQUIRE_DEST_TAG)) {
@@ -104,24 +106,24 @@ static void format_account_set_transaction_flags(uint32_t value, field_value_t *
     }
 }
 
-static const char *format_account_set_field_flags(uint32_t value) {
+static const char* format_account_set_field_flags(uint32_t value) {
 // AccountSet flags for fields SetFlag and ClearFlag
-#define ASF_REQUIRE_DEST                    1
-#define ASF_REQUIRE_AUTH                    2
-#define ASF_DISALLOW_XAH                    3
-#define ASF_DISABLE_MASTER                  4
-#define ASF_ACCOUNT_TXN_ID                  5
-#define ASF_NO_FREEZE                       6
-#define ASF_GLOBAL_FREEZE                   7
-#define ASF_DEFAULT_RIPPLE                  8
-#define ASF_DEPOSIT_AUTH                    9
-#define ASF_AUTH_TOKEN_MINTER               10
-#define ASF_TSH_COLLECT                     11
+#define ASF_REQUIRE_DEST 1
+#define ASF_REQUIRE_AUTH 2
+#define ASF_DISALLOW_XAH 3
+#define ASF_DISABLE_MASTER 4
+#define ASF_ACCOUNT_TXN_ID 5
+#define ASF_NO_FREEZE 6
+#define ASF_GLOBAL_FREEZE 7
+#define ASF_DEFAULT_RIPPLE 8
+#define ASF_DEPOSIT_AUTH 9
+#define ASF_AUTH_TOKEN_MINTER 10
+#define ASF_TSH_COLLECT 11
 #define ASF_DISALLOW_INCOMING_NFTOKEN_OFFER 12
-#define ASF_DISALLOW_INCOMING_CHECK         13
-#define ASF_DISALLOW_INCOMING_PAYCHAN       14
-#define ASF_DISALLOW_INCOMING_TRUSTLINE     15
-#define ASF_DISALLOW_INCOMING_REMIT         16
+#define ASF_DISALLOW_INCOMING_CHECK 13
+#define ASF_DISALLOW_INCOMING_PAYCHAN 14
+#define ASF_DISALLOW_INCOMING_TRUSTLINE 15
+#define ASF_DISALLOW_INCOMING_REMIT 16
 
     // Logic is different because only one flag is allowed per field
     switch (value) {
@@ -162,11 +164,12 @@ static const char *format_account_set_field_flags(uint32_t value) {
     }
 }
 
-static void format_account_set_flags(field_t *field, uint32_t value, field_value_t *dst) {
+static void format_account_set_flags(field_t* field, uint32_t value,
+                                     field_value_t* dst) {
     if (field->id == XAH_UINT32_FLAGS) {
         format_account_set_transaction_flags(value, dst);
     } else {
-        const char *flag = format_account_set_field_flags(value);
+        const char* flag = format_account_set_field_flags(value);
         if (flag != NULL) {
             strncpy(dst->buf, flag, sizeof(dst->buf));
         } else {
@@ -175,12 +178,12 @@ static void format_account_set_flags(field_t *field, uint32_t value, field_value
     }
 }
 
-static void format_offer_create_flags(uint32_t value, field_value_t *dst) {
+static void format_offer_create_flags(uint32_t value, field_value_t* dst) {
 // OfferCreate flags
-#define TF_PASSIVE             0x00010000u
+#define TF_PASSIVE 0x00010000u
 #define TF_IMMEDIATE_OR_CANCEL 0x00020000u
-#define TF_FILL_OR_KILL        0x00040000u
-#define TF_SELL                0x00080000u
+#define TF_FILL_OR_KILL 0x00040000u
+#define TF_SELL 0x00080000u
 
     size_t offset = 0;
     if (HAS_FLAG(value, TF_PASSIVE)) {
@@ -200,11 +203,11 @@ static void format_offer_create_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-static void format_payment_flags(uint32_t value, field_value_t *dst) {
+static void format_payment_flags(uint32_t value, field_value_t* dst) {
 // Payment flags
 #define TF_NO_RIPPLE_DIRECT 0x00010000u
-#define TF_PARTIAL_PAYMENT  0x00020000u
-#define TF_LIMIT_QUALITY    0x00040000u
+#define TF_PARTIAL_PAYMENT 0x00020000u
+#define TF_LIMIT_QUALITY 0x00040000u
 
     size_t offset = 0;
     if (HAS_FLAG(value, TF_NO_RIPPLE_DIRECT)) {
@@ -220,13 +223,13 @@ static void format_payment_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-static void format_trust_set_flags(uint32_t value, field_value_t *dst) {
+static void format_trust_set_flags(uint32_t value, field_value_t* dst) {
 // TrustSet flags
-#define TF_SETF_AUTH       0x00010000u
-#define TF_SET_NO_RIPPLE   0x00020000u
+#define TF_SETF_AUTH 0x00010000u
+#define TF_SET_NO_RIPPLE 0x00020000u
 #define TF_CLEAR_NO_RIPPLE 0x00040000u
-#define TF_SET_FREEZE      0x00100000u
-#define TF_CLEAR_FREEZE    0x00200000u
+#define TF_SET_FREEZE 0x00100000u
+#define TF_CLEAR_FREEZE 0x00200000u
 
     size_t offset = 0;
     if (HAS_FLAG(value, TF_SETF_AUTH)) {
@@ -250,7 +253,8 @@ static void format_trust_set_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-static void format_payment_channel_claim_flags(uint32_t value, field_value_t *dst) {
+static void format_payment_channel_claim_flags(uint32_t value,
+                                               field_value_t* dst) {
 // PaymentChannelClaim flags
 #define TF_RENEW 0x00010000u
 #define TF_CLOSE 0x00020000u
@@ -265,11 +269,11 @@ static void format_payment_channel_claim_flags(uint32_t value, field_value_t *ds
     }
 }
 
-static void format_set_hook_flags(uint32_t value, field_value_t *dst) {
+static void format_set_hook_flags(uint32_t value, field_value_t* dst) {
 // SetHook flags
 #define HSF_OVERRIDE 0x00000001u
 #define HSF_NSDELETE 0x0000002u
-#define HSF_COLLECT  0x00000004u
+#define HSF_COLLECT 0x00000004u
 
     size_t offset = 0;
     if (HAS_FLAG(value, HSF_OVERRIDE)) {
@@ -285,7 +289,7 @@ static void format_set_hook_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-static void format_uritoken_mint_flags(uint32_t value, field_value_t *dst) {
+static void format_uritoken_mint_flags(uint32_t value, field_value_t* dst) {
 // URITokenMint flags
 #define TF_BURNABLE 0x00000001u
 
@@ -295,7 +299,7 @@ static void format_uritoken_mint_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-static void format_claim_reward_flags(uint32_t value, field_value_t *dst) {
+static void format_claim_reward_flags(uint32_t value, field_value_t* dst) {
 // ClaimReward flags
 #define TF_OPT_IN 0x00000001u
 
@@ -305,7 +309,7 @@ static void format_claim_reward_flags(uint32_t value, field_value_t *dst) {
     }
 }
 
-void format_flags(field_t *field, field_value_t *dst) {
+void format_flags(field_t* field, field_value_t* dst) {
     uint32_t value = field->data.u32;
     switch (parse_context.transaction_type) {
         case TRANSACTION_ACCOUNT_SET:
@@ -336,15 +340,14 @@ void format_flags(field_t *field, field_value_t *dst) {
             format_uritoken_mint_flags(value, dst);
             break;
         default:
-            snprintf(dst->buf,
-                     sizeof(dst->buf),
+            snprintf(dst->buf, sizeof(dst->buf),
                      "No flags for transaction type %d",
                      parse_context.transaction_type);
             return;
     }
 
-    // Check if no flags were found (despite is_flag_hidden returning false) and respond
-    // appropriately
+    // Check if no flags were found (despite is_flag_hidden returning false) and
+    // respond appropriately
     if (dst->buf[0] == 0x00) {
         strncpy(dst->buf, "Unsupported value", sizeof(dst->buf));
     }

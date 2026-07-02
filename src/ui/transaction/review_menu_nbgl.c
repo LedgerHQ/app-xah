@@ -16,10 +16,11 @@
  ********************************************************************************/
 #ifdef HAVE_NBGL
 #include <ux.h>
+
 #include "fmt.h"
 #include "idle_menu.h"
-#include "review_menu.h"
 #include "nbgl_use_case.h"
+#include "review_menu.h"
 #include "ui.h"
 
 #define MAX_FIELDS_PER_PAGE 5
@@ -28,38 +29,37 @@
 static field_value_t txFieldValueStrings[MAX_FIELDS_PER_PAGE];
 static nbgl_contentTagValue_t pair;
 static nbgl_contentTagValueList_t pairList;
-static parseResult_t *transaction;
+static parseResult_t* transaction;
 static resultAction_t approval_menu_callback;
 
 // function called by NBGL to get the pair indexed by "index"
-static nbgl_layoutTagValue_t *getPair(uint8_t index) {
+static nbgl_layoutTagValue_t* getPair(uint8_t index) {
     uint8_t arr_idx = index % MAX_FIELDS_PER_PAGE;
     memset(&txFieldValueStrings[arr_idx], 0, sizeof(field_value_t));
     // Format tag item string.
-    pair.item = (char *) resolve_field_name(&transaction->fields[index]);
+    pair.item = (char*)resolve_field_name(&transaction->fields[index]);
     // Format tag value string.
     format_field(&transaction->fields[index], &txFieldValueStrings[arr_idx]);
     pair.value = txFieldValueStrings[arr_idx].buf;
-    PRINTF("Arr idx %d - Tag %d item : %s\nTag %d value : %s\n",
-           arr_idx,
-           index,
-           pair.item,
-           index,
-           pair.value);
+    PRINTF("Arr idx %d - Tag %d item : %s\nTag %d value : %s\n", arr_idx, index,
+           pair.item, index, pair.value);
     return &pair;
 }
 
 static void reviewChoice(bool confirm) {
     if (confirm) {
         approval_menu_callback(OPTION_SIGN);
-        nbgl_useCaseReviewStatus(STATUS_TYPE_TRANSACTION_SIGNED, display_idle_menu);
+        nbgl_useCaseReviewStatus(STATUS_TYPE_TRANSACTION_SIGNED,
+                                 display_idle_menu);
     } else {
         approval_menu_callback(OPTION_REJECT);
-        nbgl_useCaseReviewStatus(STATUS_TYPE_TRANSACTION_REJECTED, display_idle_menu);
+        nbgl_useCaseReviewStatus(STATUS_TYPE_TRANSACTION_REJECTED,
+                                 display_idle_menu);
     }
 }
 
-void display_review_menu(parseResult_t *transaction_param, resultAction_t callback) {
+void display_review_menu(parseResult_t* transaction_param,
+                         resultAction_t callback) {
     transaction = transaction_param;
     approval_menu_callback = callback;
 
@@ -73,12 +73,8 @@ void display_review_menu(parseResult_t *transaction_param, resultAction_t callba
     pairList.callback = getPair;
     pairList.startIndex = 0;
 
-    nbgl_useCaseReview(TYPE_TRANSACTION,
-                       &pairList,
-                       &ICON_APP_XAH,
-                       "Review transaction",
-                       NULL,
-                       "Sign transaction?",
+    nbgl_useCaseReview(TYPE_TRANSACTION, &pairList, &ICON_APP_XAH,
+                       "Review transaction", NULL, "Sign transaction?",
                        reviewChoice);
 }
 #endif  // HAVE_NBGL
