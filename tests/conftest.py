@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
-from ragger.conftest import configuration
 
+from ragger.conftest import configuration
 
 ###########################
 ### CONFIGURATION START ###
