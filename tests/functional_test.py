@@ -6,17 +6,18 @@ pytest-3 -v -s
 """
 
 from pathlib import Path
+
 import pytest
 from ledgerwallet.params import Bip32Path  # type: ignore [import]
 from ragger.backend import BackendInterface, RaisePolicy
+from ragger.bip import CurveChoice, calculate_public_key_and_chaincode
+from ragger.error import ExceptionRAPDU
 from ragger.firmware import Firmware
 from ragger.navigator import Navigator
 from ragger.navigator.navigation_scenario import NavigateWithScenario
-from ragger.bip import calculate_public_key_and_chaincode, CurveChoice
-from ragger.error import ExceptionRAPDU
-from .xah import XAHClient, Errors
-from .utils import DEFAULT_PATH, DEFAULT_BIP32_PATH
-from .utils import verify_ecdsa_secp256k1, verify_version
+
+from .utils import DEFAULT_BIP32_PATH, DEFAULT_PATH, verify_ecdsa_secp256k1, verify_version
+from .xah import Errors, XAHClient
 
 
 def test_app_configuration(
@@ -30,9 +31,7 @@ def test_app_configuration(
     verify_version(default_screenshot_path, version)
 
 
-def test_sign_too_large(
-    backend: BackendInterface, firmware: Firmware, navigator: Navigator
-):
+def test_sign_too_large(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
     xah = XAHClient(backend, firmware, navigator)
     max_size = 10001
     payload = DEFAULT_BIP32_PATH + b"a" * (max_size - 4)
@@ -43,9 +42,7 @@ def test_sign_too_large(
         assert rapdu.status in [Errors.SW_WRONG_LENGTH, Errors.SW_INTERNAL_3]
 
 
-def test_sign_invalid_tx(
-    backend: BackendInterface, firmware: Firmware, navigator: Navigator
-):
+def test_sign_invalid_tx(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
     xah = XAHClient(backend, firmware, navigator)
     payload = DEFAULT_BIP32_PATH + b"a" * (40)
     try:
@@ -55,9 +52,7 @@ def test_sign_invalid_tx(
         assert rapdu.status in [Errors.SW_INTERNAL_1, Errors.SW_INTERNAL_2]
 
 
-def test_path_too_long(
-    backend: BackendInterface, firmware: Firmware, navigator: Navigator
-):
+def test_path_too_long(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
     xah = XAHClient(backend, firmware, navigator)
     path = Bip32Path.build(DEFAULT_PATH + "/0/0/0/0/0/0")
     try:
@@ -66,13 +61,9 @@ def test_path_too_long(
         assert rapdu.status == Errors.SW_INVALID_PATH
 
 
-def test_get_public_key_no_confirm(
-    backend: BackendInterface, firmware: Firmware, navigator: Navigator
-):
+def test_get_public_key_no_confirm(backend: BackendInterface, firmware: Firmware, navigator: Navigator):
     xah = XAHClient(backend, firmware, navigator)
-    key_len, key_data, chain_len, chain_data = xah.get_pubkey_no_confirm(
-        chain_code=True
-    )
+    key_len, key_data, chain_len, chain_data = xah.get_pubkey_no_confirm(chain_code=True)
     ref_public_key, ref_chain_code = calculate_public_key_and_chaincode(
         CurveChoice.Secp256k1, DEFAULT_PATH, compress_public_key=True
     )
@@ -124,7 +115,7 @@ def test_sign_reject(
 
     # pragma pylint: disable=line-too-long
     # Transaction extracted from testcases/01-payment/01-basic.raw
-    transaction = "120000228000000024000000036140000000000F424068400000000000000F732102B79DA34F4551CA976B66AA78A55C43707EC2BB2BEC39F95BD53F24E2E45A9E6781140511E17DB83BB6F113939D67BC8EA539EDC926FC83140511E17DB83BB6F113939D67BC8EA539EDC926FC"
+    transaction = "120000228000000024000000036140000000000F424068400000000000000F732102B79DA34F4551CA976B66AA78A55C43707EC2BB2BEC39F95BD53F24E2E45A9E6781140511E17DB83BB6F113939D67BC8EA539EDC926FC83140511E17DB83BB6F113939D67BC8EA539EDC926FC"  # noqa: E501
     # pragma pylint: enable=line-too-long
 
     # Convert message to bytes
